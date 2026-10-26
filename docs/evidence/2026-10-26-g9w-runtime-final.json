@@ -1,0 +1,229 @@
+{
+  "at": "2026-10-26T08:35:26.997Z",
+  "digests": {
+    "bankpilot_checkpoints.bp_checkpoint_attempts": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "bankpilot_checkpoints.bp_checkpoint_fencing_config": {
+      "count": 1,
+      "sha256": "bab833eddef2ce5b2e7f2c0da11cbe7cf37280bd0187c9e3f9f07ad3eaa541a0"
+    },
+    "bankpilot_checkpoints.bp_checkpoint_transfers": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "bankpilot_checkpoints.checkpoint_blobs": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "bankpilot_checkpoints.checkpoint_migrations": {
+      "count": 6,
+      "sha256": "987573df712b32fe0e3272da171302159d6e3d924829e552b5a83c4c870ae2ca"
+    },
+    "bankpilot_checkpoints.checkpoint_writes": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "bankpilot_checkpoints.checkpoints": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "bankpilot_core.accounts": {
+      "count": 83,
+      "sha256": "78ba412aa7ffa13147255ec68fd912e5f5abd10de86fa4c187cd96c66a6f54f9"
+    },
+    "bankpilot_core.actions": {
+      "count": 41,
+      "sha256": "fe6ffb41d32b1ea681de60477031ed6ce43b036e354899c6f0d3da4e68f608b6"
+    },
+    "bankpilot_core.audit_events": {
+      "count": 355,
+      "sha256": "0c613c16a2a6d47b364ccb4196c8c8671374de280e6629ea72575c89270fd947"
+    },
+    "bankpilot_core.authorization_proofs": {
+      "count": 22,
+      "sha256": "92624fbca7bc821a76219237268aea2048f8943d527c95c804bae871c90888fc"
+    },
+    "bankpilot_core.bill_transactions": {
+      "count": 1088,
+      "sha256": "35d0319cdf5f590987068858701327b1a9111230c32eb03f524cf7b4224464dd"
+    },
+    "bankpilot_core.daily_usage": {
+      "count": 75,
+      "sha256": "44da49602b657605aa71f72ba20e6343d9aa0b269ba8cf9e809874c2ee0c8d95"
+    },
+    "bankpilot_core.finance_fixture_months": {
+      "count": 136,
+      "sha256": "0b483aa2f886a41b2715a5c8d21420dd580ad4f02cab2a1a34cc4498a3595333"
+    },
+    "bankpilot_core.funds_policies": {
+      "count": 68,
+      "sha256": "24f4345437b8c52f8a9bf50955c8e74b4c54f922c3448a10149e95c29c5704fd"
+    },
+    "bankpilot_core.goal_commands": {
+      "count": 13,
+      "sha256": "b8caace57c52928a3807d4de85ba4a551d749013534d362edd4fb53f2b7a1b7a"
+    },
+    "bankpilot_core.goal_node_intents": {
+      "count": 13,
+      "sha256": "952baa590a1d404762aefe4f5e8cbf2149012a7b8ae0241b3c19f3febdc94a87"
+    },
+    "bankpilot_core.goals": {
+      "count": 8,
+      "sha256": "7be92c0209b8cb33c091fee91885705c851e453b5d30d1c01cec85d042149396"
+    },
+    "bankpilot_core.investment_actions": {
+      "count": 16,
+      "sha256": "e28e0fd3d3d1b4b41f5d42f738e098002d2c9d4eacfe55312b67b1e540114a9b"
+    },
+    "bankpilot_core.investment_faults": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "bankpilot_core.investment_outbox": {
+      "count": 17,
+      "sha256": "a8c7464b3a07090b6f5da442e353dcfb0af67ac34d11f221b7fdb452e3989e21"
+    },
+    "bankpilot_core.investment_positions": {
+      "count": 106,
+      "sha256": "4c29bce676a06e9d59ba89f139df0ae9961e49c3fb3f3ca71ecd196604236855"
+    },
+    "bankpilot_core.investment_proofs": {
+      "count": 11,
+      "sha256": "a3950f056442b42fb9c9836403fc2b80e53af3ab7eacf30373e2a6d62dac59d7"
+    },
+    "bankpilot_core.management_actions": {
+      "count": 43,
+      "sha256": "972ef757a2101791c794b846d47f5765b5b46178bcb9e934b7990436aec953e4"
+    },
+    "bankpilot_core.management_authorization_proofs": {
+      "count": 40,
+      "sha256": "8e4162c7d11d1d035f029d5d5bf43910e9f8878f85ad631aed501dec797535e4"
+    },
+    "bankpilot_core.management_cards": {
+      "count": 59,
+      "sha256": "33f702f8bc3445d5bfb6dd52f7e3bf0ca34e4004efe35de6371324e11d7d57a7"
+    },
+    "bankpilot_core.management_contact_aliases": {
+      "count": 6,
+      "sha256": "47fd2a9d151a07bb12f75a71da3e7416af6c3a0cbb79f8b24bdd4ac9ee2d4d9a"
+    },
+    "bankpilot_core.management_query_grants": {
+      "count": 14,
+      "sha256": "38853cc800e35a2b9681211edfb2f71be4486b30fcfef688f9ec6f7c5d2ccfc2"
+    },
+    "bankpilot_core.management_subscriptions": {
+      "count": 118,
+      "sha256": "c4e7427e5753657dfa0cfc2e71b9c80096f169a87f92c27d267fb1c19a2a6fcf"
+    },
+    "bankpilot_core.outbox": {
+      "count": 30,
+      "sha256": "812f917569fe524567cbb597481f566c9397b1574771c92c9974de228d807742"
+    },
+    "bankpilot_core.payees": {
+      "count": 4,
+      "sha256": "2c49b614661d003561ac5595f38503e90e12d21ef40b7332f0679873869f20e8"
+    },
+    "bankpilot_core.preparation_requests": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "bankpilot_core.provider_accounts": {
+      "count": 193,
+      "sha256": "5ae18493d86eb5b74ce975a1ebcd1cf1986db01ee01ba25262b32fa6485b44c0"
+    },
+    "bankpilot_core.provider_entries": {
+      "count": 44,
+      "sha256": "18b6edc3a0383673e742edc0891c895b47ccba09b1afdab837a38a0c243c3be9"
+    },
+    "bankpilot_core.provider_faults": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "bankpilot_core.provider_positions": {
+      "count": 106,
+      "sha256": "298416de79232f3cc13813ea8557b086024497b418a69d3d555c08f5cc7dc30c"
+    },
+    "bankpilot_core.provider_redemptions": {
+      "count": 11,
+      "sha256": "38596bc1bbabee9893ff2883096978fd5e706e91a648d54de14cae1c9a5cc342"
+    },
+    "bankpilot_core.provider_transfers": {
+      "count": 22,
+      "sha256": "dd565451ccab567b81fd4f9ff76e10984ce25df65ece70cabf6790db6fcd7486"
+    },
+    "bankpilot_core.redemption_entries": {
+      "count": 10,
+      "sha256": "eb8a5419cf348ec5eead9509b318aa4273aeaff87d37632517808cffcb1def0b"
+    },
+    "public.account": {
+      "count": 82,
+      "sha256": "48aa1004f7f3ce5b06a91ba4706e8e5669496b9279bda1671c16cda761009245"
+    },
+    "public.bp_challenges": {
+      "count": 49,
+      "sha256": "133dd0f3e4c1e1a078a635feda268c13f611a6b82f8500a555c72e0f49bd7ade"
+    },
+    "public.bp_chat_messages": {
+      "count": 88,
+      "sha256": "a451ede11084a6d09a17c21d9c77fb4fb15e41e92408fb75a70bb623abb2a8e5"
+    },
+    "public.bp_clarifications": {
+      "count": 7,
+      "sha256": "9647d87cc7b5791dcb9ff5762a92429e7134007fb9cf55ae25fb6acca3fd7b70"
+    },
+    "public.bp_conversations": {
+      "count": 44,
+      "sha256": "7a3982746ed586945b5ea24ecb5ba20582c828a49c1cf31bd660c0e683253812"
+    },
+    "public.bp_credentials": {
+      "count": 20,
+      "sha256": "9ec3c027dac72ba1c76d609cfdfca147ddec07dad91ef39b877fd61cc29ba6db"
+    },
+    "public.bp_plan_commands": {
+      "count": 97,
+      "sha256": "1b219a2b6e7f5c849beb933ba635d34211162ea96430dae3d387a1e0a98e661c"
+    },
+    "public.session": {
+      "count": 170,
+      "sha256": "d10b327f0382774efaccf24456e80c3fc1093593c5fd736774fa51899c1a0930"
+    },
+    "public.user": {
+      "count": 82,
+      "sha256": "b820c9a3882469e7c8e30e1df53694f80f1e3924b7a8bec7a1c6d89e4d46c98d"
+    },
+    "public.verification": {
+      "count": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "commandStates": [
+    {
+      "status": "complete",
+      "n": 94
+    },
+    {
+      "status": "failed",
+      "n": 1
+    },
+    {
+      "status": "running",
+      "n": 2
+    }
+  ],
+  "stateVersions": [
+    {
+      "version": "1",
+      "n": 97
+    }
+  ],
+  "commandExcludingStateVersion": {
+    "count": 97,
+    "sha256": "2d51ca83e78a73acf72e327e7dd44105ecfd3c85eea6b31ca7098a183c5f8bb8"
+  },
+  "readOnly": true,
+  "changedTables": [],
+  "removedTables": [],
+  "originalCommandFieldsUnchanged": true
+}

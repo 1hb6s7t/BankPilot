@@ -1,0 +1,26 @@
+{
+  "reviewer": "freeze_functional_audit",
+  "result": "pass on corrected test tooling second run",
+  "firstFailure": "test queried a nonphysical reserved_minor column; no business action yet",
+  "passed": 2,
+  "A_durationMs": 5432,
+  "B_durationMs": 3469,
+  "A": {
+    "settledBalanceMinor": "900000",
+    "paidBalanceMinor": "869975",
+    "paymentAuthorizationAfterSettlement": true
+  },
+  "B": {
+    "unknownCoreBalanceMinor": "869975",
+    "unknownReservationMinor": "60000",
+    "providerBalanceMinor": "809975",
+    "recoveredBalanceMinor": "809975",
+    "providerTransfers": 2,
+    "providerEntries": 4,
+    "confirmPosts": 1,
+    "reconcilePosts": 1,
+    "originalProofsUnchanged": true
+  },
+  "scope": "scripted local API/Worker/PostgreSQL/browser; virtual WebAuthn; no cloud; browser refresh and re-login, no process restart",
+  "visualLimitation": "B before-refresh screenshot still shows AUTHORIZED; UNKNOWN state supported by API/DB and post-refresh UI assertions"
+}

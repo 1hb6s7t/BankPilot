@@ -1,0 +1,30 @@
+{
+  "review": "bounded staged publication package review",
+  "stagedCount": 593,
+  "publishListCount": 593,
+  "manifestFileCount": 592,
+  "zipMemberCount": 593,
+  "zipSha256": "b76f004ba1b1979d4e276bee566c70cbef8f7451cb77510436a85bf7a775ac22",
+  "zipCrcPassed": true,
+  "outerFiles": {
+    "artifacts/BankPilot-G9V-source-with-tests-20261026.zip": {
+      "exists": true,
+      "staged": false
+    },
+    "artifacts/BankPilot-G9V-source-with-tests-20261026.zip.sha256": {
+      "exists": true,
+      "staged": false
+    },
+    "docs/evidence/2026-10-26-g9w-package-verification.json": {
+      "exists": true,
+      "staged": false
+    },
+    "docs/evidence/2026-10-26-g9w-runtime-final.json": {
+      "exists": true,
+      "staged": false
+    }
+  },
+  "highConfidencePatternHits": [],
+  "errors": [],
+  "scope": "Index bytes, publish path list, staged manifest byte/hash metadata, local ZIP membership/CRC/bytes, and named high-confidence key patterns. No credential files read, tests run, network use, commit, or staged changes."
+}

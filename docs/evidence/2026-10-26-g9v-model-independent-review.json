@@ -1,0 +1,15 @@
+{
+  "reviewer": "freeze_functional_audit",
+  "result": "evidence valid, business unavailable",
+  "caseCount": 8,
+  "http403": 8,
+  "semanticCalls": 8,
+  "domainAndReviewerCalls": 0,
+  "attempts": 8,
+  "retries": 0,
+  "assessed": 0,
+  "passed": 0,
+  "sourceFilesMatched": 316,
+  "missingUsage": 8,
+  "note": "403 does not establish a specific upstream cause or model semantic failure"
+}

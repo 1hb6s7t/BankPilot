@@ -1,0 +1,384 @@
+$ tsx scripts/test-isolated.ts
+2026-10-26T08:17:19.677Z ERROR [Better Auth]: Database schema mismatch
+
+  Missing tables
+    user, session, account, verification
+
+  help: Run `npx auth migrate` to add the missing tables and columns.
+$ pnpm typecheck && pnpm test && pnpm build
+$ tsc --noEmit
+$ vitest run
+
+ RUN  v5.0.5 /private/tmp/bankpilot-g9v-source-tests-08fxydqu/source
+
+ ✓ tests/agents-checkpoint-fencing.test.ts (10 tests) 1065ms
+   ✓ G8B PostgresSaver journal-row fencing foundation (10)
+     ✓ serializes a saver put ahead of lease takeover when the saver acquired the journal row first 530ms
+stderr | tests/conversations-api.integration.test.ts > conversation API integration > rolls back a pre-commit message failure and accepts the identical client key exactly once on retry
+API error: error synthetic pre-commit rejection
+
+stderr | tests/conversations-api.integration.test.ts > conversation API integration > retries a failed original command and completed replay does not call the planner again
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/conversations-api.integration.test.ts > conversation API integration > keeps proposal, draft action, and result/message atomic when result message insertion fails
+Conversation planning failed: PLAN_FAILED
+
+ ✓ tests/conversations-api.integration.test.ts (17 tests) 1370ms
+stderr | tests/api.integration.test.ts > isolated real DB/API identity and recovery integration review > recovers a command after an action was committed but the planner envelope was not saved, without replanning action content
+API error: Error simulated loss after core commit
+
+(node:25441) ExperimentalWarning: The supports Web Crypto API method is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25441) ExperimentalWarning: The ML-DSA-44 Web Crypto API algorithm is an experimental feature and might change at any time
+ ✓ tests/api.integration.test.ts (24 tests) 2369ms
+ ✓ tests/g9e-semantic-source.test.ts (108 tests) 105ms
+ ✓ tests/g9f-subscription-continuations.integration.test.ts (38 tests) 1163ms
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > recovers transfer service failure under the same command without rerunning interpretation
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > retries only the reviewer after its outage, including after rebuilding the application
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > retains a slower successful sibling when another parallel domain has already failed
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > does not turn transfer malformed output into missing user information or an endlessly retryable request
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > does not turn reviewer malformed output into missing user information or an endlessly retryable request
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > serializes concurrent review retries into one recovery and one draft
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > does not hide a permanent domain error behind a concurrent temporary failure
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > replays a saved proposal after interruption before the first action is created
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > rejects a general-schema-valid candidate against the request-bound transfer schema: amount
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > rejects a general-schema-valid candidate against the request-bound transfer schema: payee
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > rejects a general-schema-valid candidate against the request-bound transfer schema: memo
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > rejects a general-schema-valid candidate against the request-bound transfer schema: missing_suggestion
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: payload
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: payload
+Conversation planning failed: STAGE_SNAPSHOT_DIGEST_MISMATCH
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: version
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: version
+Conversation planning failed: STAGE_SNAPSHOT_DIGEST_MISMATCH
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: removed_result
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: removed_result
+Conversation planning failed: STAGE_SNAPSHOT_DIGEST_MISMATCH
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: removed_history
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: removed_history
+Conversation planning failed: STAGE_SNAPSHOT_DIGEST_MISMATCH
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: removed_entire_state
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: removed_entire_state
+Conversation planning failed: STAGE_SNAPSHOT_DIGEST_MISMATCH
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: cross_command
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: cross_command
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8f-stage-recovery-api.integration.test.ts > G8F independent API/PG recovery across domain and review failures > stops before HTTP when saved stage integrity fails: cross_command
+Conversation planning failed: STAGE_SNAPSHOT_DIGEST_MISMATCH
+
+ ✓ tests/g8f-stage-recovery-api.integration.test.ts (23 tests) 2486ms
+ ✓ tests/g9c-regression-runner.test.ts (50 tests) 2679ms
+   ✓ G9C frozen manifest static calibration (27)
+     ✓ preflights authored static files without execution mode, provider config, model requests or database access 540ms
+   ✓ G9C offline durable orchestration using the unchanged G9 scorer and observer (6)
+     ✓ runs all 36 in original order, checks hashes before/after every case and preserves earlier artifacts across reruns 1507ms
+     ✓ preserves unavailable and unscored safety denominators across a complete provider-failure run 464ms
+stderr | tests/g8m-preparation-requests.integration.test.ts > G8M durable preparation requests and transaction abandonment fences > retains failed acceptance across app recreation and retries the exact original version and normalized input
+API error: error private payload must never appear in journal
+
+stderr | tests/g8m-preparation-requests.integration.test.ts > G8M durable preparation requests and transaction abandonment fences > keeps a committed goal recoverable after initial advancement fails and never advances through replay
+API error: Error simulated child response failure
+
+ ✓ tests/g8m-preparation-requests.integration.test.ts (10 tests) 1133ms
+ ✓ tests/g9b-semantic-grounding.test.ts (78 tests) 34ms
+ ✓ tests/g9-evaluation.test.ts (61 tests) 117ms
+ ✓ tests/agents-phase2.test.ts (56 tests) 89ms
+ ✓ tests/agents-management.test.ts (69 tests) 87ms
+ ✓ tests/g8g-evaluation-runners.test.ts (16 tests) 4514ms
+   ✓ G8G real evaluation entrypoints with controlled transport (16)
+     ✓ model preserves transfer/MODEL_HTTP_502 without losing preceding attempts 332ms
+     ✓ G7 counts semantic and the successful slow sibling when another domain fails 630ms
+     ✓ G7 retains reviewer failure stage while keeping earlier HTTP successes 402ms
+     ✓ ablation reports repeated variants and unscored domain failures without double counting 1643ms
+     ✓ ablation includes a late successful sibling in the failed production case 447ms
+ ✓ tests/g9b-regression-runner.test.ts (33 tests) 2591ms
+   ✓ G9B frozen manifest static calibration (20)
+     ✓ preflights authored static files without execution mode, provider config, model requests or database access 505ms
+   ✓ G9B offline durable orchestration using the unchanged G9 scorer and observer (5)
+     ✓ runs all 36 in original order, checks hashes before/after every case and preserves earlier artifacts across reruns 1482ms
+     ✓ preserves unavailable and unscored safety denominators across a complete provider-failure run 465ms
+ ✓ tests/investment.integration.test.ts (20 tests) 2018ms
+   ✓ synthetic investment redemption with independent provider settlement (20)
+     ✓ uses real pg-boss/outbox worker for T+0 without a special cash mutation path 670ms
+ ✓ tests/conversations.integration.test.ts (31 tests) 666ms
+ ✓ tests/g9d-semantic-source-binding.test.ts (47 tests) 63ms
+ ✓ tests/goals.integration.test.ts (16 tests) 2063ms
+ ✓ tests/management.integration.test.ts (13 tests) 962ms
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > keeps service failure recoverable, reuses the original catalog, and replays success without a second draft
+Conversation planning failed: MODEL_HTTP_502
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > does not offer or dispatch retry for non-transient provider authentication failure
+Conversation planning failed: MODEL_HTTP_401
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > keeps exhausted MODEL_SCHEMA_INVALID output failure separate from missing user information
+Conversation planning failed: MODEL_SCHEMA_INVALID
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > keeps exhausted MODEL_OUTPUT_JSON_INVALID output failure separate from missing user information
+Conversation planning failed: MODEL_OUTPUT_JSON_INVALID
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > counts request caps across explicit retries and stops before issuing a call over the same-command budget
+Conversation planning failed: MODEL_HTTP_502
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > counts request caps across explicit retries and stops before issuing a call over the same-command budget
+Conversation planning failed: MODEL_HTTP_502
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > counts request caps across explicit retries and stops before issuing a call over the same-command budget
+Conversation planning failed: MODEL_HTTP_502
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > counts request caps across explicit retries and stops before issuing a call over the same-command budget
+Conversation planning failed: MODEL_OUTPUT_BUDGET_EXHAUSTED
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > reuses a successful interpretation when financial preparation fails, including after rebuilding the app
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > reports planning exhaustion accurately when the last permitted semantic call succeeds
+Conversation planning failed: MODEL_HTTP_502
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > reports planning exhaustion accurately when the last permitted semantic call succeeds
+Conversation planning failed: MODEL_HTTP_502
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > reports planning exhaustion accurately when the last permitted semantic call succeeds
+Conversation planning failed: MODEL_HTTP_502
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > reports planning exhaustion accurately when the last permitted semantic call succeeds
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > does not offer endless retries for a persisted RECOGNITION_SNAPSHOT_INCOMPATIBLE snapshot
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > does not offer endless retries for a persisted RECOGNITION_SNAPSHOT_INCOMPATIBLE snapshot
+Conversation planning failed: RECOGNITION_SNAPSHOT_INCOMPATIBLE
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > does not offer endless retries for a persisted SEMANTIC_SNAPSHOT_INVALID snapshot
+Conversation planning failed: PLAN_FAILED
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > does not offer endless retries for a persisted SEMANTIC_SNAPSHOT_INVALID snapshot
+Conversation planning failed: SEMANTIC_SNAPSHOT_INVALID
+
+stderr | tests/g8e-recovery-api.integration.test.ts > G8E independent real API/PG recovery with controlled provider transport > concurrent explicit retries create one winning plan and one draft
+Conversation planning failed: MODEL_HTTP_502
+
+ ✓ tests/g8e-recovery-api.integration.test.ts (12 tests) 1363ms
+ ✓ tests/model-attempt-journal.test.ts (24 tests) 225ms
+ ✓ tests/g8k-conversation-pagination.integration.test.ts (15 tests) 418ms
+ ✓ tests/g9d-bill-query.test.ts (106 tests) 23ms
+ ✓ tests/g9c-quality-runner.test.ts (40 tests) 1170ms
+   ✓ G9C supplemental entrypoint has a separate, explicitly non-blind contract (34)
+     ✓ preflights static temporary files without reading provider config or creating cloud/DB clients 509ms
+   ✓ G9C supplemental durable execution reuses G9 scoring, attempts and observation (6)
+     ✓ runs all twelve sequentially in frozen order with every before/after check and independent artifact denominator 317ms
+ ✓ tests/planner-checkpoint-process-recovery.integration.test.ts (2 tests) 2674ms
+   ✓ resumes the production Planner across SIGKILL during reviewer, without rerunning its completed transfer node 1305ms
+   ✓ resumes a real parallel-domain superstep after SIGKILL, preserving completed pending writes and rerunning only the interrupted branch 1368ms
+ ✓ tests/g9d-paired-runner.test.ts (20 tests) 1882ms
+   ✓ G9D offline durable stage orchestration (10)
+     ✓ runs default 36+12 then none 36+12 once, preserving business failures as assessed evidence and never calling fetch 1314ms
+ ✓ tests/plan-runner-frozen-input.integration.test.ts (5 tests) 200ms
+ ✓ tests/g8g-evaluation-observation.test.ts (31 tests) 234ms
+ ✓ tests/g8n-goal-date-repair.test.ts (76 tests) 84ms
+ ✓ tests/provider-reliability.test.ts (37 tests) 25ms
+ ✓ tests/g9f-subscription-prerequisite.test.ts (150 tests) 26ms
+ ✓ tests/semantic-score.test.ts (15 tests) 15ms
+ ✓ tests/g9g-runner.test.ts (19 tests) 1369ms
+   ✓ G9G offline durable stage orchestration and trace integrity (8)
+     ✓ runs default 36 then 12 only once and reports both separate denominators without fetch 889ms
+ ✓ tests/semantic-intent.test.ts (55 tests) 37ms
+ ✓ tests/g8n-goal-language.test.ts (76 tests) 29ms
+ ✓ tests/g9g-bill-query-semantic.test.ts (31 tests) 38ms
+ ✓ tests/g9e-inactive-source.test.ts (67 tests) 22ms
+ ✓ tests/agents-ablation.test.ts (36 tests) 147ms
+ ✓ tests/semantic-whole-message.test.ts (57 tests) 37ms
+ ✓ tests/g9b-bill-facts.test.ts (41 tests) 12ms
+ ✓ tests/g9g-score.test.ts (87 tests) 63ms
+ ✓ tests/g9c-semantic-boundaries.test.ts (64 tests) 29ms
+ ✓ tests/core.integration.test.ts (15 tests) 2059ms
+   ✓ Postgres business invariants and synthetic provider (15)
+     ✓ real pg-boss drains transactional outbox and durable execution survives worker restart 1340ms
+ ✓ tests/agents-financial.test.ts (31 tests) 74ms
+ ✓ tests/g9e-runner.test.ts (18 tests) 1329ms
+   ✓ G9E offline durable stage orchestration and trace integrity (8)
+     ✓ runs default 36 then 12 only once and reports both separate denominators without fetch 854ms
+ ✓ tests/g8d-semantic-repair.test.ts (58 tests) 53ms
+ ✓ tests/g9h-runner.test.ts (18 tests) 2048ms
+   ✓ G9H frozen default triple-score contract (18)
+     ✓ requires a complete same-manifest 36-case report before the 12-case stage 880ms
+ ✓ tests/g8l-command-receipts.integration.test.ts (4 tests) 825ms
+ ✓ tests/g9c-management-batch.integration.test.ts (2 tests) 297ms
+ ✓ tests/g9h-bill-domain-assessment.test.ts (33 tests) 60ms
+ ✓ tests/api-shutdown-process.integration.test.ts (2 tests) 2151ms
+   ✓ drains direct-disconnected through the production SIGTERM lifecycle before closing PostgreSQL and exiting 1158ms
+   ✓ drains chat-background through the production SIGTERM lifecycle before closing PostgreSQL and exiting 992ms
+ ✓ tests/g9c-bill-query.test.ts (57 tests) 13ms
+ ✓ tests/semantic-quality-regression.test.ts (47 tests) 19ms
+ ✓ tests/conversations-process-recovery.integration.test.ts (1 test) 1332ms
+   ✓ recovers a frozen proposal after a real SIGKILL between committed Core draft and final result, without planning or executing again 1331ms
+ ✓ tests/g8f-stage-recovery.test.ts (15 tests) 98ms
+ ✓ tests/g9i-runner.test.ts (6 tests) 1291ms
+   ✓ G9I trusted default runner profile (6)
+     ✓ runs offline 36 then 12 through the same G9I manifest and refuses a second first run 1068ms
+ ✓ tests/g8d-bill-evidence.test.ts (11 tests) 8ms
+stderr | tests/g9f-subscription-continuation-api.integration.test.ts > G9F query confirmation continues the exact original request > refuses omitted original tasks and publishes no partial write cards
+Subscription continuation failed: CONTINUATION_SCOPE_MISMATCH
+
+stderr | tests/g9f-subscription-continuation-api.integration.test.ts > G9F query confirmation continues the exact original request > retains a failed child for explicit retry with the same source message and original input
+Subscription continuation failed: PLAN_FAILED
+
+stderr | tests/g9f-subscription-continuation-api.integration.test.ts > G9F query confirmation continues the exact original request > queues explicit failed-child retry while the same owner has another continuation running
+Subscription continuation failed: PLAN_FAILED
+
+stderr | tests/g9f-subscription-continuation-api.integration.test.ts > G9F query confirmation continues the exact original request > queues explicit failed-child retry while the same owner has another continuation running
+Subscription continuation failed: PLAN_FAILED
+
+stderr | tests/g9f-subscription-continuation-api.integration.test.ts > G9F query confirmation continues the exact original request > expires the exact grant during planning and requires a new confirmed query cycle
+Subscription continuation failed: QUERY_ACCESS_EXPIRED
+
+ ✓ tests/g9f-subscription-continuation-api.integration.test.ts (8 tests) 1785ms
+   ✓ G9F query confirmation continues the exact original request (8)
+     ✓ queues explicit failed-child retry while the same owner has another continuation running 307ms
+ ✓ tests/finance.integration.test.ts (11 tests) 581ms
+ ✓ tests/g9h-bill-domain-integration.test.ts (21 tests) 101ms
+ ✓ tests/g8c-product-name.test.ts (52 tests) 30ms
+ ✓ tests/g8c-semantic-completion.test.ts (48 tests) 50ms
+ ✓ tests/g8j-chat-history-state.test.ts (24 tests) 10ms
+ ✓ tests/g9i-card-apposition.test.ts (60 tests) 21ms
+ ✓ tests/agents.test.ts (23 tests) 380ms
+ ✓ tests/chat-state.test.ts (15 tests) 18ms
+ ✓ tests/g8c-bills.test.ts (35 tests) 35ms
+ ✓ tests/g8e-planning-journal.integration.test.ts (13 tests) 164ms
+ ✓ tests/semantic-planning.test.ts (11 tests) 72ms
+ ✓ tests/g9g-prior-validation.test.ts (7 tests) 1008ms
+ ✓ tests/checkpoint-setup-failure.integration.test.ts (2 tests) 94ms
+ ✓ tests/g8k-chat-pagination-state.test.ts (22 tests) 17ms
+ ✓ tests/semantic-scope-repair.test.ts (12 tests) 29ms
+ ✓ tests/g8j-dashboard-state.test.ts (17 tests) 4ms
+ ✓ tests/ablation-score.test.ts (16 tests) 11ms
+ ✓ tests/g9j-conversation-presentation.test.ts (34 tests) 4ms
+ ✓ tests/checkpoint-transfer-process.integration.test.ts (1 test) 593ms
+   ✓ checkpoint transfer process-crash atomicity (1)
+     ✓ rolls back the copied lineage when killed before or after the uncommitted pointer switch 587ms
+ ✓ tests/g8e-chat-recovery-state.test.ts (24 tests) 16ms
+ ✓ tests/g8j-history.integration.test.ts (6 tests) 874ms
+   ✓ uses a constant number of history queries and retains every pending request across 160 messages 573ms
+ ✓ tests/g9k-runner.test.ts (4 tests) 126ms
+ ✓ tests/semantic-source-retry.test.ts (24 tests) 34ms
+ ✓ tests/g9b-checkpoint-review.test.ts (10 tests) 46ms
+ ✓ tests/g8i-delivery.test.ts (14 tests) 347ms
+ ✓ tests/g6-domain-language.test.ts (42 tests) 9ms
+ ✓ tests/g9f-management-batch.integration.test.ts (10 tests) 526ms
+ ✓ tests/g9i-provider-contract-diagnostic.test.ts (7 tests) 717ms
+ ✓ tests/g9f-continuation-proposal.test.ts (9 tests) 5ms
+ ✓ tests/g8f-goal-funding-boundary.test.ts (75 tests) 27ms
+ ✓ tests/g9i-request-observation.test.ts (7 tests) 61ms
+ ✓ tests/g8j-webauthn-transaction.test.ts (8 tests) 4ms
+ ✓ tests/goal-state.test.ts (9 tests) 2ms
+ ✓ tests/g9i-card-apposition-review.test.ts (40 tests) 17ms
+ ✓ tests/g6-transfer-language.test.ts (77 tests) 48ms
+ ✓ tests/g8h-controlled-model.test.ts (35 tests) 88ms
+ ✓ tests/g8g-evaluation-entries.test.ts (8 tests) 197ms
+ ✓ tests/g8d-card-locator.test.ts (58 tests) 16ms
+ ✓ tests/transfer-negation.test.ts (55 tests) 49ms
+ ✓ tests/g9i-request-observation-review.test.ts (8 tests) 61ms
+ ✓ tests/g9f-continuation-attempt-guard.test.ts (13 tests) 16ms
+ ✓ tests/g9j-conversation-presentation.integration.test.ts (4 tests) 107ms
+ ✓ tests/g8e-runner-observation.test.ts (4 tests) 37ms
+ ✓ tests/g9c-bill-answer-review.test.ts (12 tests) 56ms
+ ✓ tests/g9b-review-integration.test.ts (12 tests) 55ms
+ ✓ tests/g9e-investment-query-scope.test.ts (10 tests) 30ms
+ ✓ tests/planner-checkpoint-resume.integration.test.ts (1 test) 168ms
+ ✓ tests/provider-diagnostics.test.ts (14 tests) 16ms
+ ✓ tests/model-attempt-journal-process.test.ts (3 tests) 330ms
+ ✓ tests/g8h-investment-acceptance.integration.test.ts (4 tests) 261ms
+ ✓ tests/g9b-semantic-known-regression.test.ts (22 tests) 27ms
+ ✓ tests/g9d-provider-observation.test.ts (8 tests) 14ms
+ ✓ tests/g9e-score.test.ts (53 tests) 11ms
+ ✓ tests/g9c-management-batch.test.ts (13 tests) 38ms
+ ✓ tests/g8f-stage-journal.integration.test.ts (10 tests) 107ms
+ ✓ tests/g8f-checkpoint-stage-recovery.integration.test.ts (2 tests) 244ms
+ ✓ tests/g8e-semantic-failure.test.ts (22 tests) 25ms
+ ✓ tests/g8l-command-journal.test.ts (14 tests) 8ms
+ ✓ tests/agents-persistence.test.ts (4 tests) 310ms
+ ✓ tests/g8c-semantic-coverage.test.ts (30 tests) 14ms
+ ✓ tests/planning-budget.test.ts (19 tests) 4ms
+ ✓ tests/g6-fixtures.test.ts (2 tests) 3ms
+ ✓ tests/g8h-worker-startup.integration.test.ts (1 test) 1243ms
+   ✓ releases real PgBoss after a controlled first-flush connect error and restarts in the same schema 1243ms
+ ✓ tests/g9c-semantic-known-source.test.ts (5 tests) 20ms
+ ✓ tests/g8h-worker-startup.test.ts (12 tests) 9ms
+ ✓ tests/g8c-observation-planner.test.ts (6 tests) 44ms
+ ✓ tests/g8i-core-disconnect.test.ts (6 tests) 3ms
+ ✓ tests/g9c-provider-reasoning.test.ts (12 tests) 13ms
+ ✓ tests/g8l-management-privacy.test.ts (6 tests) 2ms
+ ✓ tests/g8c-bill-coverage.integration.test.ts (4 tests) 149ms
+ ✓ tests/g8m-preparation-state.test.ts (4 tests) 1ms
+ ✓ tests/g9b-provider-thinking.test.ts (7 tests) 12ms
+ ✓ tests/g8j-transaction-lifecycle.test.ts (3 tests) 2ms
+ ✓ tests/g9k-live-subscription-runner.test.ts (6 tests) 1277ms
+ ✓ tests/g9g-isolated-runner.test.ts (2 tests) 4509ms
+   ✓ G9G isolated test runner pure safety probes (2)
+     ✓ kills an owned grandchild that ignores TERM after its process-group leader exits 4305ms
+ ✓ tests/g9h-isolated-browser-runner.test.ts (4 tests) 809ms
+
+ Test Files  134 passed (134)
+      Tests  3420 passed (3420)
+   Start at  16:17:21
+   Duration  88.87s (tests 80%, import 18%, transform 2%)
+
+    Isolate  134 workers spawned · ~49ms startup each (spawn + environment, per file)
+             at least ~6.51s faster with isolate: false — reuses workers across files instead of one per file
+
+$ vite build apps/web
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 2715 modules transformed.
+rendering chunks...
+computing gzip size...
+apps/web/dist/index.html                               0.55 kB │ gzip:   0.38 kB
+apps/web/dist/assets/index-BNvK3vDU.css               66.90 kB │ gzip:  14.39 kB
+apps/web/dist/assets/ConversationsPanel-CFsVZwYk.js  380.94 kB │ gzip: 111.98 kB
+apps/web/dist/assets/index-CXYXAbec.js               408.61 kB │ gzip: 119.20 kB
+
+✓ built in 206ms
+Isolated test evidence: /private/tmp/bankpilot-g9v-source-tests-08fxydqu/source/docs/evidence/g9g-isolated-test-2026-10-26T08-17-19-136Z-aad0fad3-e5ea-4c33-b7a4-33bce0558077
+Isolated test exit code: 0; database cleanup verified: true

@@ -1,0 +1,56 @@
+✓ Lockfile passes supply-chain policies (verified 4d ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +257
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Packages are cloned from the content-addressable store to the virtual store.
+  Content-addressable store is at: /tmp/bankpilot-g9v-source-tests-08fxydqu/pnpm-store/v11
+  Virtual store is at:             node_modules/.pnpm
+Progress: resolved 257, reused 0, downloaded 14, added 14
+Progress: resolved 257, reused 0, downloaded 65, added 65
+[WARN] Tarball download average speed 45 KiB/s (size 50 KiB) is below 50 KiB/s: https://registry.npmjs.org/@better-fetch/fetch/-/fetch-1.3.2.tgz (GET)
+[WARN] Tarball download average speed 5 KiB/s (size 8 KiB) is below 50 KiB/s: https://registry.npmjs.org/react-textarea-autosize/-/react-textarea-autosize-8.5.9.tgz (GET)
+Progress: resolved 257, reused 0, downloaded 177, added 176
+Progress: resolved 257, reused 0, downloaded 249, added 249
+Progress: resolved 257, reused 0, downloaded 250, added 250
+Progress: resolved 257, reused 0, downloaded 253, added 253
+Progress: resolved 257, reused 0, downloaded 254, added 254
+Progress: resolved 257, reused 0, downloaded 255, added 254
+Progress: resolved 257, reused 0, downloaded 255, added 255
+Progress: resolved 257, reused 0, downloaded 256, added 256
+Progress: resolved 257, reused 0, downloaded 257, added 256
+Progress: resolved 257, reused 0, downloaded 257, added 257, done
+.../esbuild@0.28.2/node_modules/esbuild postinstall$ node install.js
+.../esbuild@0.28.2/node_modules/esbuild postinstall: Done
+
+dependencies:
++ @assistant-ui/react 0.15.30
++ @hono/node-server 2.1.5
++ @langchain/core 1.2.20
++ @langchain/langgraph 1.5.2
++ @langchain/langgraph-checkpoint-postgres 1.1.2
++ @simplewebauthn/browser 14.0.0
++ @simplewebauthn/server 14.0.3
++ better-auth 1.7.12
++ hono 4.13.13
++ lucide-react 1.61.0
++ pg 8.23.1
++ pg-boss 12.38.0
++ react 19.3.1
++ react-dom 19.3.1
++ zod 4.6.7
+
+devDependencies:
++ @playwright/test 1.64.1
++ @types/node 26.6.5
++ @types/pg 8.23.1
++ @types/react 19.3.0
++ @types/react-dom 19.3.0
++ @vitejs/plugin-react 6.1.2
++ concurrently 10.0.6
++ tsx 4.23.15
++ typescript 7.0.2
++ vite 8.3.5
++ vitest 5.0.5
+
+Done in 1m using pnpm v11.25.0

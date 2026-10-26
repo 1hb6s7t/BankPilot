@@ -1,0 +1,3 @@
+{"type":"structured_output_metadata","attemptId":"1ce80a40-5146-498c-8968-9bf21848ab60","role":"semantic_intent","status":"success","outputLength":196,"outputDigest":"364ee66732a7ba893e1453906d66f1521a4b0a00755d82d77daf1f52a54b861a"}
+{"type":"structured_output_metadata","attemptId":"c624a995-f9ff-4284-87d1-f584c78a66ca","role":"card","status":"success","outputLength":406,"outputDigest":"d3713149070ec395ad5128156e94759c15401267ce0690f69d57e79be0b2625a"}
+{"type":"structured_output_metadata","attemptId":"b5853ef1-1a2a-455d-8aa0-37f8fadc1f81","role":"reviewer","status":"success","outputLength":244,"outputDigest":"1d17cd477b335bd3027df29b2fa871031c765a8383ed7d3819ba112f5e4fc121"}

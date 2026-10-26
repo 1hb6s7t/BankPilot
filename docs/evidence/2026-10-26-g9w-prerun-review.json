@@ -1,0 +1,14 @@
+{
+  "mechanicalRunnerAndTestDiffOnly": true,
+  "productSourceFilesChecked": 316,
+  "productSourceStable": true,
+  "provider": "https://apiw.pro/v1",
+  "model": "deepseek-v4.1-flash",
+  "conditionChange": "user-supplied replacement key stored locally; no key or digest published",
+  "knownSyntheticCase": true,
+  "caseLimit": 1,
+  "maxHttp": 4,
+  "attemptsPerStage": 1,
+  "repairs": 0,
+  "caseDeadlineSeconds": 180
+}

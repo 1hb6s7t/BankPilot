@@ -1,0 +1,27 @@
+{
+  "sourceDirectory": "/tmp/bankpilot-g9v-source-tests-08fxydqu/source",
+  "dependencyInstallation": "new independent store; frozen lockfile",
+  "sourceFilesChecked": 520,
+  "sourceBytesStableAfterTests": true,
+  "typecheck": {
+    "passed": true
+  },
+  "vitest": {
+    "files": 134,
+    "passed": 3420,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 88.87
+  },
+  "build": {
+    "passed": true
+  },
+  "testExitCode": 0,
+  "testDatabaseCleanupVerified": true,
+  "cloudCallsBySuite": 0,
+  "limitations": [
+    "same developer Mac with existing Node/pnpm/Docker/PostgreSQL prerequisites",
+    "not recipient machine or Windows validation",
+    "tested source copy will be packed and extraction hashes compared, no claim of tests rerun after zip extraction"
+  ]
+}

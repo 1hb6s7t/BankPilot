@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:17-bookworm@sha256:858bb5e98eed02eb8cafbcdc007f9a65d1b613972028944a8ec2133ccaf80d27
+    environment:
+      POSTGRES_USER: bankpilot_delivery
+      POSTGRES_PASSWORD: ${BANKPILOT_DELIVERY_PASSWORD:?private instance configuration required}
+      POSTGRES_DB: bankpilot_delivery
+    ports:
+      - '127.0.0.1:${BANKPILOT_DELIVERY_DB_PORT:?isolated port required}:5432'
+    volumes:
+      - data:/var/lib/postgresql/data
+    labels:
+      bankpilot.delivery.instance: ${BANKPILOT_DELIVERY_INSTANCE:?instance required}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U bankpilot_delivery -d bankpilot_delivery']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+volumes:
+  data:
+    name: ${BANKPILOT_DELIVERY_VOLUME:?isolated volume required}
+    labels:
+      bankpilot.delivery.instance: ${BANKPILOT_DELIVERY_INSTANCE:?instance required}

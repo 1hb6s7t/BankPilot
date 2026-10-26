@@ -1,0 +1,19 @@
+{
+  "path": "/Users/auriel/Desktop/银行agnet/artifacts/BankPilot-G9V-source-with-tests-20261026.zip",
+  "bytes": 12478796,
+  "sha256": "b76f004ba1b1979d4e276bee566c70cbef8f7451cb77510436a85bf7a775ac22",
+  "members": 593,
+  "crcPass": true,
+  "allMemberBytesMatch": true,
+  "sourceTestBytesMatch": true,
+  "productSource316Stable": true,
+  "credentialsExcluded": true,
+  "docsUpdatedAfterTests": [
+    "README.md",
+    "docs/g9v-source-test-handoff.md",
+    "docs/g9v-submission-validation.md",
+    "docs/ideal-state-acceptance.md",
+    "docs/submission-readiness.md"
+  ],
+  "evidence": "Verified archive members against source; test suite was run in independent source copy before archive, not rerun from zip"
+}

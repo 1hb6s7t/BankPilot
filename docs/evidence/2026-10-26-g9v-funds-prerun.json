@@ -1,0 +1,19 @@
+{
+  "stage": "G9V",
+  "review": "root static review before execution",
+  "files": {
+    ".local/g9v-funds.spec.ts": "bbf6764218b6613bf33acc265f34303f53339f3bbb932e529318fcbd75ff7523",
+    ".local/g9v-funds.config.ts": "2b1f6230677faef6255c0a2994024f0a720803713450428589765500c4bd38df"
+  },
+  "instanceId": "73af15c09e2ee79b",
+  "sourceManifestSha256": "63258314b0e77b5f557ff8c9477fa7198dd14f6e7f205e99f477dc18b02411dd",
+  "scenarios": [
+    "A: real weekday T0 settles before separate 300.25 payment",
+    "B: actual UNKNOWN 600.00 preserves reservation, UI queries original order"
+  ],
+  "mode": "scripted",
+  "virtualWebAuthn": true,
+  "realClock": true,
+  "noAssertionDbWrites": true,
+  "retry": 0
+}

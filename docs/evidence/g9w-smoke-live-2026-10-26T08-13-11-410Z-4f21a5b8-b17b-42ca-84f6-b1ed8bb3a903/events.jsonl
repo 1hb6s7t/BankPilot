@@ -1,0 +1,5 @@
+{"type":"start","runId":"2026-10-26T08-13-11-410Z-4f21a5b8-b17b-42ca-84f6-b1ed8bb3a903","manifestSha256":"7194dd0167e1c5280f8e063e6dfe8b920e8f0d9f93878a2f8d3c3aa3ac397845","startedAt":"2026-10-26T08:13:11.427Z"}
+{"type":"http_dispatch","attemptId":"1ce80a40-5146-498c-8968-9bf21848ab60","role":"semantic_intent","requestBodySha256":"b7783113d4125feac383ad6dfedf37e3011aacc1dccc285078b98c2ad33878d2","requestMaxOutputTokens":4096,"at":"2026-10-26T08:13:11.456Z"}
+{"type":"http_dispatch","attemptId":"c624a995-f9ff-4284-87d1-f584c78a66ca","role":"card","requestBodySha256":"d5fe2ddeaa776ce42e3c44bb586ef00c34dfbc913cc123f0bb0363c4bb2f293e","requestMaxOutputTokens":14336,"at":"2026-10-26T08:13:20.732Z"}
+{"type":"http_dispatch","attemptId":"b5853ef1-1a2a-455d-8aa0-37f8fadc1f81","role":"reviewer","requestBodySha256":"cbad059bb392215a042f46b064e52af79cae370cbe1828c0cb6e18f413377adc","requestMaxOutputTokens":14336,"at":"2026-10-26T08:13:24.806Z"}
+{"type":"finish","runId":"2026-10-26T08-13-11-410Z-4f21a5b8-b17b-42ca-84f6-b1ed8bb3a903","dispatches":3,"validEvidence":true,"businessPassed":true,"finishedAt":"2026-10-26T08:13:29.175Z"}

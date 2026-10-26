@@ -1,0 +1,44 @@
+{
+  "instanceId": "73af15c09e2ee79b",
+  "readOnly": true,
+  "observedAt": "2026-10-26T06:23:14.574Z",
+  "accounts": [
+    {
+      "balance_minor": "809975",
+      "reserved_minor": "0",
+      "provider_balance_minor": "809975"
+    }
+  ],
+  "counts": {
+    "actions": 2,
+    "authorization_proofs": 2,
+    "provider_transfers": 2,
+    "provider_entries": 4,
+    "investment_actions": 1,
+    "investment_proofs": 1,
+    "provider_redemptions": 1,
+    "redemption_entries": 2
+  },
+  "actions": [
+    {
+      "amount_minor": "30025",
+      "status": "SUCCEEDED",
+      "reserved": false
+    },
+    {
+      "amount_minor": "60000",
+      "status": "SUCCEEDED",
+      "reserved": false
+    }
+  ],
+  "ledger": {
+    "net": "0"
+  },
+  "redemptions": [
+    {
+      "amount_minor": "100000",
+      "status": "SETTLED",
+      "immediate_due": true
+    }
+  ]
+}

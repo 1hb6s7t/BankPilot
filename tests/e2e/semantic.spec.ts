@@ -1,0 +1,107 @@
+import { waitForConversationPlan } from './chat-helpers.js';
+import { test, expect, type Page } from '@playwright/test';
+import { randomUUID } from 'node:crypto';
+import { createPool, createAuth } from '../../apps/api/src/config.js';
+import { createCore, createFinance, createManagement, createInvestment } from '../../packages/core/src/index.js';
+
+const pool = createPool(), password = 'BankPilot-semantic-e2e!';
+let email: string, userId: string;
+test.beforeAll(async () => {
+  email = `semantic-e2e-${randomUUID()}@example.test`;
+  const { user } = await createAuth(pool).api.signUpEmail({ body: { email, password, name: '语义入口独立验收' } });
+  userId = user.id;
+  const actor = { userId };
+  await createCore(pool).seedDemo(actor); await createFinance(pool).seedDemo(actor);
+  await createManagement(pool).seedDemo(actor); await createInvestment(pool).seedDemo(actor);
+});
+test.afterAll(async () => { await pool.end(); });
+async function send(page: Page, message: string) {
+  await page.getByRole('textbox', { name: '描述转账需求' }).fill(message);
+  const pending = waitForConversationPlan(page);
+  await page.getByRole('button', { name: '发送请求' }).click();
+  const plan = await pending;
+  await test.info().attach(`plan-${plan.taskId}.json`, { body: JSON.stringify(plan, null, 2), contentType: 'application/json' });
+  return plan;
+}
+test('semantic cloud request creates an exact pending draft, survives refresh and ignores an example', async ({ page }) => {
+  test.setTimeout(390_000);
+  test.skip(!process.env.BANKPILOT_MODEL_NAME, 'This acceptance requires the configured cloud model.');
+  const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
+  await page.goto('/'); await page.getByLabel('邮箱地址').fill(email);
+  await page.getByLabel('密码', { exact: true }).fill(password);
+  await page.getByRole('button', { name: '进入安全工作台' }).click();
+  await expect(page.getByRole('textbox', { name: '描述转账需求' })).toBeVisible();
+  const plan = await send(page, '给林晓打点钱，就三百零七块五，备注书展票');
+  expect(plan.mode).toBe('model'); expect(plan.diagnostics.intent).toMatchObject({ status: 'ready', roles: ['transfer'] });
+  expect(plan.modelRuns.filter((r: { status: string }) => r.status === 'success').map((r: { role: string }) => r.role)).toEqual(['semantic_intent', 'transfer', 'reviewer']);
+  expect(plan.suggestions).toMatchObject([{ amountMinor: '30750', memo: '书展票' }]);
+  expect(plan.fundsPreview.amountMinor).toBe('30750');
+  expect(plan.actions).toHaveLength(1); expect(plan.actions[0].status).toBe('AWAITING_CONFIRMATION');
+  await expect(page.getByRole('button', { name: '确认并执行', exact: true })).toBeVisible();
+  await page.reload();
+  const restored = await page.evaluate(async () => (await fetch('/api/dashboard')).json());
+  expect(restored.latestPlan.taskId).toBe(plan.taskId);
+  expect(restored.accounts[0]).toMatchObject({ balanceMinor: '800000', reservedMinor: '0' });
+  expect(restored.actions).toHaveLength(1);
+  await page.screenshot({ path: 'test-results/phase7-semantic-desktop.png', fullPage: true, animations: 'disabled' });
+  const example = await send(page, '给林晓转账100元只是个示例');
+  expect(example.actions).toEqual([]); expect(example.suggestions).toEqual([]);
+  expect(example.diagnostics.intent.status).toBe('no_action');
+  expect(example.events.some((event: { role: string }) => event.role === 'transfer')).toBe(false);
+  expect((await pool.query('SELECT count(*)::int AS n FROM bankpilot_core.provider_transfers WHERE account_id=$1', [`acc-main-${userId}`])).rows[0].n).toBe(0);
+  expect(errors).toEqual([]);
+});
+
+test('funds query answers the protected spendable amount and displays the same server facts', async ({ page }) => {
+  test.setTimeout(200_000);
+  test.skip(!process.env.BANKPILOT_MODEL_NAME, 'This acceptance requires the configured cloud model.');
+  await page.goto('/'); await page.getByLabel('邮箱地址').fill(email);
+  await page.getByLabel('密码', { exact: true }).fill(password);
+  await page.getByRole('button', { name: '进入安全工作台' }).click();
+  await expect(page.getByRole('textbox', { name: '描述转账需求' })).toBeVisible();
+  const before = await page.evaluate(async () => (await fetch('/api/dashboard')).json());
+  const plan = await send(page, '帮我查一下扣除房租、生活费和最低余额之后，还能安排多少钱？');
+  expect(plan.mode).toBe('model'); expect(plan.diagnostics.intent).toMatchObject({ status: 'ready', roles: ['goal'] });
+  const minor = BigInt(plan.fundsPreview.spendableMinor);
+  const yuan = `${minor / 100n}.${(minor % 100n).toString().padStart(2, '0')}`;
+  expect(plan.summary).toContain(`扣除保护金额后可安排${yuan}元`);
+  expect(plan.fundsPreview.amountMinor).toBe('0');
+  expect(plan.actions).toEqual([]); expect(plan.goalSuggestion).toBeUndefined();
+  expect(plan.modelRuns.reduce((sum: number, run: { requestMaxOutputTokens: number }) => sum + run.requestMaxOutputTokens, 0)).toBeLessThanOrEqual(32768);
+  const after = await page.evaluate(async () => (await fetch('/api/dashboard')).json());
+  expect(after.accounts).toEqual(before.accounts); expect(after.actions).toEqual(before.actions);
+  await page.getByRole('button', { name: '资金计划', exact: true }).click();
+  await expect(page.getByText('扣除保护后可安排', { exact: true })).toBeVisible();
+  const card = page.getByRole('region', { name: '当前账户 · 基准资金预演' });
+  await expect(card).toContainText((Number(minor) / 100).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+  await page.screenshot({ path: 'test-results/phase7-refinement-funds-desktop.png', fullPage: true, animations: 'disabled' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(card).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.screenshot({ path: 'test-results/phase7-refinement-funds-mobile.png', fullPage: true, animations: 'disabled' });
+});
+
+test('grounded redemption amount survives domain handoff as a pending strong-verification draft', async ({ page }) => {
+  test.setTimeout(200_000);
+  test.skip(!process.env.BANKPILOT_MODEL_NAME, 'This acceptance requires the configured cloud model.');
+  await page.goto('/'); await page.getByLabel('邮箱地址').fill(email);
+  await page.getByLabel('密码', { exact: true }).fill(password);
+  await page.getByRole('button', { name: '进入安全工作台' }).click();
+  await expect(page.getByRole('textbox', { name: '描述转账需求' })).toBeVisible();
+  const before = await page.evaluate(async () => (await fetch('/api/investments')).json());
+  const position = before.positions.find((p: { redemptionBusinessDays: number }) => p.redemptionBusinessDays === 0);
+  expect(position).toBeTruthy();
+  const plan = await send(page, `从${position.productName}赎回427.35元`);
+  expect(plan.diagnostics.intent).toMatchObject({ status: 'ready', roles: ['investment'] });
+  expect(plan.clarification).toBeUndefined();
+  expect(plan.investmentSuggestions).toEqual([{ positionId: position.id, amountMinor: '42735', expectedVersion: position.version }]);
+  expect(plan.investmentActions).toHaveLength(1);
+  expect(plan.investmentActions[0]).toMatchObject({ positionId: position.id, amountMinor: '42735', tier: 'RED', status: 'AWAITING_VERIFICATION' });
+  const after = await page.evaluate(async () => (await fetch('/api/investments')).json());
+  expect(after.positions).toEqual(before.positions);
+  await page.reload(); await page.getByRole('button', { name: '理财', exact: true }).click();
+  const card = page.locator('.investment-action-card').filter({ hasText: position.productName });
+  await expect(card).toContainText('427.35');
+  await expect(card.getByRole('button', { name: 'Passkey 强验证并确认赎回', exact: true })).toBeVisible();
+  await page.screenshot({ path: 'test-results/phase7-postfix-redemption-desktop.png', fullPage: true, animations: 'disabled' });
+});

@@ -1,0 +1,9 @@
+{
+  "files": {
+    ".local/g9v-model-acceptance.mjs": "a770e07d74ad454cce64bc06f02590613f32865a195508ae5e1c3c2d6617cf66",
+    ".local/g9v-model-acceptance.test.mjs": "02853630a62d6605185405b142b90b6a98676839f940aa2634ff1a3a28187a8d",
+    ".local/g9v-model-acceptance-protocol.md": "93381cafc005d322c500b88d0ae47e323d0b1ce3fe5342726ec1159e69d776be"
+  },
+  "review": "independent agent approved after snapshotClockBinding field correction",
+  "scope": "8 known cases; six positive domains and 2 negative/clarification; 1 attempt per stage, no repair, max32 HTTP"
+}

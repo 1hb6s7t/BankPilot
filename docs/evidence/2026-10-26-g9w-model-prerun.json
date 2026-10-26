@@ -1,0 +1,12 @@
+{
+  "mechanicalCopyOnly": true,
+  "caseCount": 8,
+  "sourceBaseline": "G9Q316",
+  "mode": "known representative regression",
+  "condition": "replacement key and successful G9W single-scene smoke",
+  "maxHttp": 32,
+  "attemptsPerStage": 1,
+  "structureRepairs": 0,
+  "maxReservedOutputPerCase": 32768,
+  "productChanged": false
+}

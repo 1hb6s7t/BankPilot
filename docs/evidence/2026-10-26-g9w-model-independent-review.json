@@ -1,0 +1,276 @@
+{
+  "version": "g9w-model-and-source-tests-independent-review-v1",
+  "reviewedAtUtc": "2026-10-26T08:22:54.522Z",
+  "overall": "PASS_WITH_EXPLICIT_SCOPE",
+  "model": {
+    "evidenceDirectory": "docs/evidence/g9w-live-2026-10-26T08-17-17-847Z-35671b23-ee10-48a3-8752-2cb233e8a97d",
+    "runId": "2026-10-26T08-17-17-847Z-35671b23-ee10-48a3-8752-2cb233e8a97d",
+    "result": "8 of 8 known representative cases passed; evidence valid",
+    "blind": false,
+    "caseCount": 8,
+    "passed": 8,
+    "dispatches": 20,
+    "attemptStarts": 20,
+    "attemptEnds": 20,
+    "allHttp200": true,
+    "retries": 0,
+    "structureRepairs": 0,
+    "source316HashMatches": true,
+    "evaluatorHashesMatch": true,
+    "fixedInputsAndExpectedLabelsMatch": true,
+    "firstMarker": {
+      "path": ".local/g9w-results/g9w-live-fcdabfe6f0530408f7a5865dd49a22a087cc8dcf1c914baf1b51789509b0f418.first.json",
+      "runIdMatches": true,
+      "frozenContentAndFirstKeyMatch": true
+    },
+    "evidenceHashes": [
+      {
+        "path": "docs/evidence/g9w-live-2026-10-26T08-17-17-847Z-35671b23-ee10-48a3-8752-2cb233e8a97d/manifest.json",
+        "sha256": "d3378f0c98e5ee441aae0169ed958c18028d9f21d2cacd1bc892e8f2bd8e84cf",
+        "matches": true,
+        "localOriginalMatches": true
+      },
+      {
+        "path": "docs/evidence/g9w-live-2026-10-26T08-17-17-847Z-35671b23-ee10-48a3-8752-2cb233e8a97d/attempts.jsonl",
+        "sha256": "ec6679849fbc9bc932a031d28d3c21eb6aeaec78957921cbd7d46c1d9c7bfcb4",
+        "matches": true,
+        "localOriginalMatches": true
+      },
+      {
+        "path": "docs/evidence/g9w-live-2026-10-26T08-17-17-847Z-35671b23-ee10-48a3-8752-2cb233e8a97d/events.jsonl",
+        "sha256": "061ebe3946cf44305f0a963baa67729890f724c1ee66e11316db62323b287afe",
+        "matches": true,
+        "localOriginalMatches": true
+      },
+      {
+        "path": "docs/evidence/g9w-live-2026-10-26T08-17-17-847Z-35671b23-ee10-48a3-8752-2cb233e8a97d/requests.jsonl",
+        "sha256": "817e0e6ee4727f033606076c34170687fa5cbf7030c48c76f828035c67016a40",
+        "matches": true,
+        "localOriginalMatches": true
+      },
+      {
+        "path": "docs/evidence/g9w-live-2026-10-26T08-17-17-847Z-35671b23-ee10-48a3-8752-2cb233e8a97d/outputs.jsonl",
+        "sha256": "4711291f269b41a21594b69d9c2693386e5e650067af08f67989922fe8006181",
+        "matches": true,
+        "localOriginalMatches": true
+      },
+      {
+        "path": "docs/evidence/g9w-live-2026-10-26T08-17-17-847Z-35671b23-ee10-48a3-8752-2cb233e8a97d/envelopes.jsonl",
+        "sha256": "ec37d0324dc9414fbd88dba21eba0d9df5244867bd041af71291dbb60dc1cdfb",
+        "matches": true,
+        "localOriginalMatches": true
+      }
+    ],
+    "subscriptionClockBinding": {
+      "anchorIso": "2026-10-24T04:01:00.000Z",
+      "caseWallStartIso": "2026-10-26T08:18:22.980Z",
+      "deltaMs": 188242980,
+      "queriedAt": {
+        "template": "2026-10-24T04:00:00.000Z",
+        "resolved": "2026-10-26T08:17:22.980Z"
+      },
+      "accessExpiresAt": {
+        "template": "2026-10-24T04:05:00.000Z",
+        "resolved": "2026-10-26T08:22:22.980Z"
+      }
+    },
+    "usage": {
+      "inputTokens": 48222,
+      "outputTokens": 14556,
+      "reasoningTokensReportedWithinOutput": 11345,
+      "missingInputUsage": 0,
+      "missingOutputUsage": 0,
+      "requestedOutputCeilingTotal": 204800
+    },
+    "timing": {
+      "firstCaseStart": "2026-10-26T08:17:17.892Z",
+      "lastCaseFinish": "2026-10-26T08:19:25.320Z",
+      "eightCaseWallMs": 127428,
+      "firstAttemptStart": "2026-10-26T08:17:17.899Z",
+      "lastAttemptEnd": "2026-10-26T08:19:25.294Z",
+      "attemptSpanMs": 127395
+    },
+    "cases": [
+      {
+        "id": "g9-transfer-01",
+        "domain": "transfer",
+        "kind": "positive",
+        "roles": [
+          "semantic_intent",
+          "transfer",
+          "reviewer"
+        ],
+        "recordedScorePassed": true,
+        "recordedFailures": [],
+        "requestedOutputCeiling": 32768,
+        "reportedInputTokens": 6728,
+        "reportedOutputTokens": 1419,
+        "durationMs": 14860
+      },
+      {
+        "id": "g9-bills-02",
+        "domain": "bills",
+        "kind": "positive",
+        "roles": [
+          "semantic_intent",
+          "bills",
+          "reviewer"
+        ],
+        "recordedScorePassed": true,
+        "recordedFailures": [],
+        "requestedOutputCeiling": 32768,
+        "reportedInputTokens": 7794,
+        "reportedOutputTokens": 1430,
+        "durationMs": 15577
+      },
+      {
+        "id": "g9-investment-01",
+        "domain": "investment",
+        "kind": "positive",
+        "roles": [
+          "semantic_intent",
+          "investment",
+          "reviewer"
+        ],
+        "recordedScorePassed": true,
+        "recordedFailures": [],
+        "requestedOutputCeiling": 32768,
+        "reportedInputTokens": 5989,
+        "reportedOutputTokens": 1744,
+        "durationMs": 16568
+      },
+      {
+        "id": "g9-card-01",
+        "domain": "card",
+        "kind": "positive",
+        "roles": [
+          "semantic_intent",
+          "card",
+          "reviewer"
+        ],
+        "recordedScorePassed": true,
+        "recordedFailures": [],
+        "requestedOutputCeiling": 32768,
+        "reportedInputTokens": 6435,
+        "reportedOutputTokens": 2195,
+        "durationMs": 18017
+      },
+      {
+        "id": "g9-subscription-02",
+        "domain": "subscription",
+        "kind": "positive",
+        "roles": [
+          "semantic_intent",
+          "subscription",
+          "reviewer"
+        ],
+        "recordedScorePassed": true,
+        "recordedFailures": [],
+        "requestedOutputCeiling": 32768,
+        "reportedInputTokens": 6624,
+        "reportedOutputTokens": 2859,
+        "durationMs": 21951
+      },
+      {
+        "id": "g9-goal-01",
+        "domain": "goal",
+        "kind": "positive",
+        "roles": [
+          "semantic_intent",
+          "goal",
+          "reviewer"
+        ],
+        "recordedScorePassed": true,
+        "recordedFailures": [],
+        "requestedOutputCeiling": 32768,
+        "reportedInputTokens": 6238,
+        "reportedOutputTokens": 2600,
+        "durationMs": 22134
+      },
+      {
+        "id": "g9-transfer-05",
+        "domain": "transfer",
+        "kind": "no_action",
+        "roles": [
+          "semantic_intent"
+        ],
+        "recordedScorePassed": true,
+        "recordedFailures": [],
+        "requestedOutputCeiling": 4096,
+        "reportedInputTokens": 4222,
+        "reportedOutputTokens": 2138,
+        "durationMs": 14847
+      },
+      {
+        "id": "g9-card-04",
+        "domain": "card",
+        "kind": "clarification",
+        "roles": [
+          "semantic_intent"
+        ],
+        "recordedScorePassed": true,
+        "recordedFailures": [],
+        "requestedOutputCeiling": 4096,
+        "reportedInputTokens": 4192,
+        "reportedOutputTokens": 171,
+        "durationMs": 3350
+      }
+    ],
+    "preflightInvocation": {
+      "log": "docs/evidence/2026-10-26-g9w-model-preflight-no-env.log",
+      "logSha256": "9ade8bfd964255880097ec18244664e2d0f8ceb44fb10f0fbf2fd59841145978",
+      "rootReportedCondition": "Initial command omitted --env-file and failed provider binding before first marker or HTTP; corrected command performed the sole actual live run.",
+      "corroboration": "Runner validates provider before source freeze, first marker and fetch; one matching live first marker and exactly 20 recorded HTTP dispatches. Generic preflight log alone does not encode its environment.",
+      "countedAsCloudRetry": false
+    },
+    "limitations": [
+      "Previously exposed known representative cases, not blind or full 36+12 quality evaluation.",
+      "Scores and reviewer approval are checked against recorded deterministic score fields and fixed labels; free model output is intentionally not retained, so this review does not independently rejudge raw narrative.",
+      "No transaction execution, browser flow, physical-device, recipient-machine, or production-capacity acceptance established.",
+      "Prior G9V HTTP403 results remain independent preserved history."
+    ]
+  },
+  "sourceTests": {
+    "verificationPath": "docs/evidence/2026-10-26-g9v-source-test-verification.json",
+    "verificationSha256": "dc8e5e0d4f7a4c6ecde67e49ac9e13ad3bb6c07bc5790dd4a976dfa78b649260",
+    "testManifestPath": "docs/evidence/2026-10-26-g9v-source-test-manifest.json",
+    "testManifestSha256": "88f7e3703ffce11c3186c7dc4d6631537a673e5bd608d62080df6f45f4e0d7bc",
+    "cleanupPath": "docs/evidence/2026-10-26-g9v-source-test-cleanup.json",
+    "cleanupSha256": "c5bd7ddad426b9376bde218c0803806bbb8ad7807fbdf1b446200cef667a0183",
+    "sourceDirectory": "/tmp/bankpilot-g9v-source-tests-08fxydqu/source",
+    "sourceManifestSha256": "376b59005b598b743d903a4299d7e8727cedd6f5ad7b398b9c040e495cd8a74c",
+    "sourceFilesChecked": 520,
+    "sourceBytesChecked": 7511861,
+    "all520HashesAndLengthsMatch": true,
+    "independentDependencyDirectory": true,
+    "installLogSha256": "edec7f4b22486c62a0fdbb8cf85b6f857771aab36a98b46290d3761fd0945d1e",
+    "testLogSha256": "7cbe18698ad17a0ffd185e0335f798c0decc9f78da3f28c5f7e4a796c6d72a6f",
+    "typecheckPassed": true,
+    "vitest": {
+      "files": 134,
+      "passed": 3420,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 88.87
+    },
+    "buildPassed": true,
+    "exitCode": 0,
+    "randomOwnedDatabase": "bp_g9g_test_aad0fad3e5ea4c33b7a433bce0558077",
+    "ownedDatabaseCleanupVerifiedInRecords": true,
+    "cloudCallsBySuite": 0,
+    "cloudBoundaryBasis": "Default test:isolated environment strips provider credentials and executes pnpm check; read-only static review of that unchanged runner, not independent traffic monitoring.",
+    "limitations": [
+      "same developer Mac with existing Node/pnpm/Docker/PostgreSQL prerequisites",
+      "not recipient machine or Windows validation",
+      "tested source copy will be packed and extraction hashes compared, no claim of tests rerun after zip extraction"
+    ]
+  },
+  "reviewMethod": {
+    "readOnlyEvidenceReview": true,
+    "readCredentials": false,
+    "networkCalls": false,
+    "testsRerun": false,
+    "productModified": false
+  },
+  "issues": []
+}

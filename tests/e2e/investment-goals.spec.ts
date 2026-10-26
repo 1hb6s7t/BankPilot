@@ -1,0 +1,130 @@
+import { waitForConversationPlan } from './chat-helpers.js';
+import { test, expect, type Page } from '@playwright/test';
+import { randomUUID } from 'node:crypto';
+import { createPool, createAuth } from '../../apps/api/src/config.js';
+import { createCore, createFinance, createManagement, createInvestment } from '../../packages/core/src/index.js';
+
+const pool = createPool();
+const password = 'BankPilot-phase4-e2e!';
+let email: string;
+test.use({ actionTimeout: 15_000 });
+test.beforeAll(async () => {
+  email = `investment-goals-e2e-${randomUUID()}@example.test`;
+  const { user } = await createAuth(pool).api.signUpEmail({ body: { email, password, name: '赎回与生日目标验收' } });
+  const actor = { userId: user.id };
+  await createCore(pool).seedDemo(actor);
+  await createFinance(pool).seedDemo(actor);
+  await createManagement(pool).seedDemo(actor);
+  await createInvestment(pool).seedDemo(actor);
+});
+test.afterAll(async () => { await pool.end(); });
+const read = (page: Page, path: string) => page.evaluate(async p => (await fetch(p)).json(), path);
+const future = () => new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+async function login(page: Page) {
+  await page.goto('/');
+  await page.getByLabel('邮箱地址').fill(email);
+  await page.getByLabel('密码', { exact: true }).fill(password);
+  await page.getByRole('button', { name: '进入安全工作台' }).click();
+  await expect(page.getByRole('textbox', { name: '描述转账需求' })).toBeVisible();
+}
+
+test('T+2 waits without cash credit; T+0 funds a separately authorized and locally replanned birthday transfer', async ({ page, context }) => {
+  test.setTimeout(120_000);
+  const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
+  await login(page);
+  const cdp = await context.newCDPSession(page);
+  await cdp.send('WebAuthn.enable');
+  await cdp.send('WebAuthn.addVirtualAuthenticator', { options: {
+    protocol: 'ctap2', transport: 'internal', hasResidentKey: true,
+    hasUserVerification: true, isUserVerified: true, automaticPresenceSimulation: true,
+  } });
+  await page.getByRole('button', { name: '理财', exact: true }).click();
+  const t2 = page.locator('.investment-position-card').filter({ hasText: 'T+2' });
+  await t2.getByRole('textbox').fill('100.50');
+  await t2.getByRole('button', { name: '预览并准备赎回' }).click();
+  const pending = page.locator('.investment-action-card').filter({ hasText: 'T+2' });
+  await pending.getByRole('button', { name: '还没有 Passkey？先注册' }).click();
+  await expect(pending.getByRole('status')).toContainText('Passkey 已登记');
+  await pending.getByRole('button', { name: 'Passkey 强验证并确认赎回' }).click();
+  await expect(pending.locator('.management-action-status')).toHaveText('模拟结算中 · 未到账', { timeout: 20000 });
+  const portfolio = await read(page, '/api/investments');
+  const delayed = portfolio.actions.find((a: any) => a.productId === 'synthetic-t2');
+  expect(delayed.amountMinor).toBe('10050'); expect(delayed.receipt).toBeUndefined();
+  expect((await read(page, '/api/dashboard')).accounts[0].balanceMinor).toBe('800000');
+  expect((await read(page, '/api/investments/timeline')).days.some((d: any) => d.expectedInMinor === '10050')).toBe(true);
+  await page.screenshot({ path: 'test-results/phase4-investment-desktop.png', fullPage: true, animations: 'disabled' });
+
+  await page.getByRole('button', { name: '生活目标', exact: true }).click();
+  const form = page.locator('.goal-create-panel');
+  await form.getByLabel('目标名称').fill('林晓生日礼金');
+  await form.getByLabel('目标金额（元）').fill('500.25');
+  await form.getByLabel('目标完成日期').fill(future());
+  await form.getByLabel('收款人', { exact: true }).selectOption('payee-lin');
+  const immediatePosition = portfolio.positions.find((p: any) => p.redemptionBusinessDays === 0);
+  await form.getByLabel('计划资金来源（可选）').selectOption(immediatePosition.id);
+  await form.getByLabel('预计赎回金额（元）').fill('1000.00');
+  await form.getByRole('button', { name: '保存并查看计划' }).click();
+  const detail = page.locator('.goal-detail-panel');
+  await expect(detail.getByRole('heading', { name: '林晓生日礼金', exact: true })).toBeVisible();
+  let goal = (await read(page, '/api/goals')).goals[0];
+  expect(goal.amountMinor).toBe('50025'); expect(goal.funding.redemptionAmountMinor).toBe('100000');
+  if (!goal.nodes[0].actionRef) await detail.getByRole('button', { name: '检查进度并准备下一步' }).click();
+  await detail.getByRole('button', { name: 'Passkey 强验证并确认赎回' }).click();
+  await expect.poll(async () => (await read(page, `/api/goals/${goal.id}`)).nodes[0].investmentAction?.status, { timeout: 20000 }).toBe('SUCCEEDED');
+  await page.getByRole('button', { name: '刷新目标', exact: true }).click();
+  goal = await read(page, `/api/goals/${goal.id}`);
+  expect(goal.nodes[2].actionRef).toBeUndefined();
+  const originalRedemption = goal.nodes[0].actionRef.actionId;
+  const originalReceipt = goal.nodes[0].investmentAction.receipt.providerTransactionId;
+  expect((await read(page, '/api/dashboard')).accounts[0].balanceMinor).toBe('900000');
+  await detail.getByRole('button', { name: '修改目标并重新规划' }).click();
+  const edit = detail.locator('.goal-replan-form');
+  await expect(edit.getByLabel('目标金额（元）')).toHaveValue('500.25');
+  await edit.getByLabel('目标金额（元）').fill('600.75');
+  await edit.getByRole('button', { name: '确认修改并重规划' }).click();
+  await expect(detail.locator('.goal-revision-diff')).toBeVisible();
+  goal = await read(page, `/api/goals/${goal.id}`);
+  expect(goal.planVersion).toBe(2); expect(goal.amountMinor).toBe('60075');
+  expect(goal.nodes[0].actionRef.actionId).toBe(originalRedemption);
+  expect(goal.nodes[0].investmentAction.receipt.providerTransactionId).toBe(originalReceipt);
+  await detail.getByRole('button', { name: '检查进度并准备下一步' }).click();
+  await expect(detail.getByRole('button', { name: '确认此转账', exact: true })).toBeVisible();
+  expect((await read(page, '/api/dashboard')).accounts[0].balanceMinor).toBe('900000');
+  await detail.getByRole('button', { name: '确认此转账', exact: true }).click();
+  await expect.poll(async () => (await read(page, `/api/goals/${goal.id}`)).status, { timeout: 20000 }).toBe('SUCCEEDED');
+  await page.getByRole('button', { name: '刷新目标', exact: true }).click();
+  await expect(detail.locator('.goal-status')).toHaveText('目标已完成');
+  expect((await read(page, '/api/dashboard')).accounts[0].balanceMinor).toBe('839925');
+  const final = await read(page, `/api/goals/${goal.id}`);
+  expect(final.nodes.every((n: any) => n.status === 'SUCCEEDED')).toBe(true);
+  await page.reload();
+  await page.getByRole('button', { name: '生活目标', exact: true }).click();
+  await expect(page.locator('.goal-detail-panel .goal-status')).toHaveText('目标已完成');
+  await page.screenshot({ path: 'test-results/phase4-goal-desktop.png', fullPage: true, animations: 'disabled' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect.poll(async () => page.locator('.sidebar').evaluate(el => el.getBoundingClientRect().right)).toBeLessThanOrEqual(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: 'test-results/phase4-goal-mobile.png', fullPage: true, animations: 'disabled' });
+  expect(errors).toEqual([]);
+});
+
+test('configured cloud planner persists an explicit birthday proposal without an immediate transfer', async ({ page }) => {
+  test.setTimeout(150000);
+  await login(page);
+  const before = (await read(page, '/api/dashboard')).accounts[0].balanceMinor;
+  await page.getByRole('textbox', { name: '描述转账需求' }).fill(`生日目标：在${future()}前给林晓转账200元`);
+  const returned = waitForConversationPlan(page);
+  await page.getByRole('button', { name: '发送请求' }).click();
+  const result = await returned;
+  expect(result.mode).toBe(process.env.BANKPILOT_MODEL_NAME ? 'model' : 'scripted');
+  expect(result.actions).toEqual([]); expect(result.goal.amountMinor).toBe('20000');
+  expect(result.goal.targetDate).toBe(future());
+  if (result.mode === 'model') expect(result.modelRuns.every((r: any) => r.status === 'success')).toBe(true);
+  expect((await read(page, '/api/dashboard')).accounts[0].balanceMinor).toBe(before);
+  await page.reload();
+  expect((await read(page, '/api/dashboard')).latestPlan.goal.id).toBe(result.goal.id);
+  await expect(page.getByRole('button', { name: '查看生活目标计划', exact: true })).toBeVisible();
+  await page.screenshot({ path: 'test-results/phase4-goal-plan-desktop.png', fullPage: true, animations: 'disabled' });
+  await page.getByRole('button', { name: '查看生活目标计划', exact: true }).click();
+  await expect(page.locator('.goal-detail-panel .goal-metrics')).toContainText('200.00');
+});

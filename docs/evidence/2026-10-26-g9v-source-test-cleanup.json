@@ -1,0 +1,18 @@
+{
+  "runId": "aad0fad3-e5ea-4c33-b7a4-33bce0558077",
+  "databaseName": "bp_g9g_test_aad0fad3e5ea4c33b7a433bce0558077",
+  "processGroup": {
+    "checked": true,
+    "termSent": false,
+    "killSent": false,
+    "gone": true
+  },
+  "testPoolClosed": true,
+  "migrationSettled": true,
+  "adminClosed": true,
+  "attempted": true,
+  "dropped": true,
+  "verifiedAbsent": true,
+  "identityMatched": true,
+  "completedAtUtc": "2026-10-26T08:18:51.504Z"
+}

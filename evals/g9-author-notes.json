@@ -1,0 +1,486 @@
+{
+  "datasetVersion": "bankpilot-g9-unseen-2026-10-24-v1",
+  "author": "independent LLM synthetic sample author",
+  "completedAt": "2026-10-24T04:25:37.873Z",
+  "taskBoundary": {
+    "implementationBlindAtAuthoring": true,
+    "externalHumanBlindTest": false,
+    "realUserDistributionClaim": false,
+    "prohibitedSourcesNotRead": true,
+    "plannerInvocations": 0,
+    "resolverInvocations": 0,
+    "modelInvocations": 0,
+    "databaseInvocations": 0
+  },
+  "readFiles": [
+    {
+      "path": "README.md",
+      "sha256": "ecbcf6231ddd35dd437462d80f185fa26f2e0121a5bcf802b700d4a6e736aed4"
+    },
+    {
+      "path": "docs/phase1-contract.md",
+      "sha256": "47e41db01f42d7d0403e32c8778ab7d3dfdc8fc2825f8da12794d18fa9082f71"
+    },
+    {
+      "path": "docs/phase2-contract.md",
+      "sha256": "c9f49fd4bf3d06c918880baef4c8fffc06e2268a7ec6ff1389f143ef01167742"
+    },
+    {
+      "path": "docs/phase3-contract.md",
+      "sha256": "0b5576758e54ba4be179e71144e66684b861b640b1aae4e8b27140c8ba6cf40d"
+    },
+    {
+      "path": "docs/phase4-contract.md",
+      "sha256": "ab8b86aedaa30a3b7712cceff9ef11280afb335a74ff0e1ad8d29fa80a7837ad"
+    },
+    {
+      "path": "docs/phase5-contract.md",
+      "sha256": "3aa76831a449c65e700cc270ecbd1b20d423585af944ee702af8986d3908c19f"
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "sha256": "0d8c386710eb442bd60ddb489a5d03ee14e81fceaf533f9aee72f98321e466a9"
+    },
+    {
+      "path": "packages/contracts/src/goals.ts",
+      "sha256": "0f1a63afef09ffc84ad9b5bc251098fd2f544b1f571586581a572f61d9775129"
+    },
+    {
+      "path": "packages/contracts/src/investment.ts",
+      "sha256": "a001942de4d1125942069ea9a5f5c7ad0a5ab51bd7eb3d991b27c7bf98134ada"
+    },
+    {
+      "path": "packages/contracts/src/preparations.ts",
+      "sha256": "3d7b30a17e9dbd0e2899c8d40052bbdf88a0b4690f5af7d0d15acea719b24409"
+    },
+    {
+      "path": "packages/contracts/src/management.ts",
+      "sha256": "f0d5ee898672d7b8860163869eaddfd4523cd9ebe812b6b3a411969a36f5d5ff"
+    },
+    {
+      "path": "packages/contracts/src/conversations.ts",
+      "sha256": "41144c6c263bb9d537e79dc57a616ea1bb781534185bd362ee86a01edf9a5e2d"
+    },
+    {
+      "path": "evals/g9-contract.ts",
+      "sha256": "d1ea9f981ce013913a0d2bf50fb4988978cc5cd7666ecce4955709c91b9bb41a"
+    }
+  ],
+  "requirementBasis": [
+    {
+      "source": "docs/phase1-contract.md",
+      "use": "合成银行、整数分、单笔候选与后续授权分离。"
+    },
+    {
+      "source": "docs/phase2-contract.md",
+      "use": "历史账单原记录、分类合计、缺少数据不能伪造、历史收入不回灌余额。"
+    },
+    {
+      "source": "docs/phase3-contract.md",
+      "use": "联系人别名、卡ACTIVE/LOST、版本、查询授权与商户取消/银行拦截的独立语义。"
+    },
+    {
+      "source": "docs/phase4-contract.md",
+      "use": "本人持仓查询、固定面值赎回、到账与受理分离、目标DAG和完整目标字段。"
+    },
+    {
+      "source": "docs/phase5-contract.md",
+      "use": "手工独立标签、首测前冻结、自由标题仅显式指定时严格比较。"
+    },
+    {
+      "source": "packages/contracts/src/index.ts",
+      "use": "BillAnalysis公开结构定义了筛选、最大支出、类别对比及missing_data状态；SemanticPlan定义ready/clarification/no_action。"
+    },
+    {
+      "source": "README.md",
+      "use": "当前G8N公开范围：目标用途独立、缺年份澄清；文内历史成绩不作为数据或标签来源，未跟随历史报告链接。"
+    },
+    {
+      "source": "evals/g9-contract.ts",
+      "use": "G9 typed fixture、语义/业务澄清分离、no_action主题域、原始时钟模板绑定规则。"
+    }
+  ],
+  "authorSelfCheck": {
+    "targetedTypeScript": "passed with --ignoreConfig",
+    "staticSchema": "passed",
+    "mechanicalConsistency": "passed",
+    "uniqueBillReportsChecked": 4,
+    "snapshotClockTemplatesChecked": 5,
+    "expectedMoneyAmountsChecked": 13,
+    "notes": "只检查手工数据自洽，没有规划器、解析器、产品输出或模型。首条备注定界在作者自检时改为引号，消除句号是否属于备注的真实歧义。"
+  },
+  "cardinality": {
+    "caseCount": 36,
+    "positiveCount": 24,
+    "clarificationCount": 6,
+    "noActionCount": 6,
+    "domainCounts": {
+      "transfer": 6,
+      "bills": 6,
+      "investment": 6,
+      "card": 6,
+      "subscription": 6,
+      "goal": 6
+    }
+  },
+  "preFreezeReviewRevisions": [
+    {
+      "affected": [
+        "g9-bills-02",
+        "g9-bills-03",
+        "g9-bills-06"
+      ],
+      "reason": "独立review指出合法证据可在BillAnalysis结构字段中，改用指定输出子树的完整字符串叶值断言，不锁定数组顺序或文本位置。"
+    },
+    {
+      "affected": [
+        "g9-bills-04"
+      ],
+      "reason": "移除会误拒否定句的0支出forbidden子串；以missing_data和缺失期间结构事实判断。"
+    },
+    {
+      "affected": [
+        "g9-investment-01",
+        "g9-card-03",
+        "g9-card-06"
+      ],
+      "reason": "查询的只读事实增加产品与可赎金额、卡片与状态的完整关联句预注册等价组；保持自然题面，未读取或依据产品输出。"
+    }
+  ],
+  "knownMeasurementLimits": [
+    "自由文本等价组为有限确定性检查，覆盖常见关联句、表格、元分写法，仍可能漏判未预注册但语义正确的表达；不称完整自然语言语义验证。",
+    "子串文本检查不能通用识别否定、引用或互相矛盾叙述；已移除明确会吞否定的0支出forbidden，不声称检测所有文本矛盾。",
+    "结构化金额、对象、版本、查询引用和目标字段仍严格比较；containsAllStrings仅查指定输出子树完整叶值，不读取输入。"
+  ],
+  "canonicalHash": {
+    "algorithm": "SHA-256; recursive object keys sorted lexicographically by Unicode code point; array order retained; JSON primitives; undefined object keys omitted",
+    "inputSha256": "008ebdc6b5a5dbee69e169e1b2c2e81ccf145e179548738cfd3d897f5f60fc15",
+    "expectedSha256": "bd9879368acc8b4b23aa376886deac017ff75bdb9819c40f04c95261e51a3dcb"
+  },
+  "cases": [
+    {
+      "id": "g9-transfer-01",
+      "domain": "transfer",
+      "kind": "positive",
+      "rationale": "阶段一金额用整数分，明确联系人与唯一正金额；586元72分=58672分。用户用引号指定备注且要求原样，末尾句号在引号内属于备注。",
+      "inputCanonicalSha256": "0023d8a17c51e80bfb77a49c9b3a8e5c989852e6fdb927a3a863f452e7164920",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "eeb85c738f41ad8f1247c7e5ec67ecf0b31791b1f9e13cb2ad75f09d8e8f56af"
+    },
+    {
+      "id": "g9-transfer-02",
+      "domain": "transfer",
+      "kind": "positive",
+      "rationale": "收款人与金额分处相邻句，但指代明确且只有一笔当前转账；245元6角5分=24565分。引号是备注定界符，不进入备注内容。",
+      "inputCanonicalSha256": "c70c261dfa076c62cc87cda90312068c39fb17c85855fa1b4de954d846bed98d",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "c0cba72783db5a5c6ca21054bd79fb0449aa0b8b456e1aec4838d57bafea907b"
+    },
+    {
+      "id": "g9-transfer-03",
+      "domain": "transfer",
+      "kind": "positive",
+      "rationale": "阶段三已保存别名可指向已有联系人；房东唯一映射郁清。金额900元=90000分，附言明确，无额外目标或预约语义。",
+      "inputCanonicalSha256": "14611dbd120a7415aa083ac918690fd44a30b9c45b9256d27c490db838b17017",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "ca3141f72422dff1b264a7abaed1af9bbfbed38ff35d8b28488c257fe5869821"
+    },
+    {
+      "id": "g9-transfer-04",
+      "domain": "transfer",
+      "kind": "clarification",
+      "rationale": "公共联系人中有两个同名苏禾，未提供银行或尾号，金额清楚仍必须先澄清收款人，不能猜测任一同名对象。",
+      "inputCanonicalSha256": "d9e9a3043ac05df84ef945ce615f2d55fa0fb0209bf3ad664868bb320e6a1c24",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "bf2e0d4fb6050c191a16d3000a48ba7f5c4a404f4a1cf8e9c3789c7fe5407040"
+    },
+    {
+      "id": "g9-transfer-05",
+      "domain": "transfer",
+      "kind": "no_action",
+      "rationale": "当前指令明确撤回引用中的转账草稿。主题域为transfer但无当前业务动作，不应因引用中的动词、姓名或金额调度转账领域。",
+      "inputCanonicalSha256": "9d04eccee3d738ec9b9bcf9c84215b28b461f067a06155e80e6387cfceea6f27",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "5f289c648dc13aabaef261388c8cf7f29c515b8f2ea7480bdd46f33643231690"
+    },
+    {
+      "id": "g9-transfer-06",
+      "domain": "transfer",
+      "kind": "positive",
+      "rationale": "明确并列的账单查询与转账，别名合住室友唯一映射宋行舟；137元2角=13720分。账单只读，不能把历史结余加到当前现金。",
+      "inputCanonicalSha256": "ed431e9ed697336f945a74af274ec5977603ef1ad3eb936946a0062010b3e308",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "8d2583bda0ff400a79b31dadcac2b42f46edf1ba2c8f98d92f1805868c35c343"
+    },
+    {
+      "id": "g9-bills-01",
+      "domain": "bills",
+      "kind": "positive",
+      "rationale": "固定参考日2026-10-24的上月为2026-09。手工支出154500分、收入418000分、净额263500分；这是历史账单，不涉及支付或订阅操作。",
+      "inputCanonicalSha256": "30dfbc168623e443b59afdbaeca69b7f4607813b6a1d47b6108de2cffe030c52",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "bcfc64dca97e0ac4a655e3cef036a2a2391eda27453982980acbc91b1e15ce80"
+    },
+    {
+      "id": "g9-bills-02",
+      "domain": "bills",
+      "kind": "positive",
+      "rationale": "BillAnalysis公共类型支持merchant_contains支出筛选。明确商户两笔3200+2800=6000分；咖啡同属餐饮仍不属于此商户，必须保留两条原记录引用。",
+      "inputCanonicalSha256": "3e355b2fb0043c8148dfc69098b7c463e04085d3b2ae467ede698a077821d703",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "ec3b828bb6f6f55eb624240bb1ef8f8e89089a62a28107dfd7557b465d61cafa"
+    },
+    {
+      "id": "g9-bills-03",
+      "domain": "bills",
+      "kind": "positive",
+      "rationale": "BillAnalysis公共类型支持largest_expense。8月最大支出为132000分房租；工资418000分是收入，不能被误当最大支出。",
+      "inputCanonicalSha256": "c6c033ebca62b4f50fae432d07a1c0c68c0c8b94138c4ad26cf896c03f740949",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "9f213818bdc9346d29a27026f354fb7b7148266d15203d7377e6cc23283481f9"
+    },
+    {
+      "id": "g9-bills-04",
+      "domain": "bills",
+      "kind": "clarification",
+      "rationale": "请求本身明确，语义ready；权威账单coverage=missing，空数组和0占位不能当完整的零支出事实。公共BillAnalysis要求missing_data和缺失月份；是否额外问句不是唯一合法呈现。",
+      "inputCanonicalSha256": "01a9f8a595d23ea808c9f5fc4c864229676641ce39a55080ecaac81d0a18a45e",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "59f0503422dc7b1e81d5b8a748fe592ec7b4d4ddd82a3eb6cdbed4a5ef31da85"
+    },
+    {
+      "id": "g9-bills-05",
+      "domain": "bills",
+      "kind": "no_action",
+      "rationale": "当前消息明确说引用仅背景且不查询分析，因此无当前账单任务。账单主题记录在domain，不把引用指令变成领域调度。",
+      "inputCanonicalSha256": "aa8d4d3e90d6d293b7823da630711ad85f447ec467f6883af625df0b079265d3",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "5f289c648dc13aabaef261388c8cf7f29c515b8f2ea7480bdd46f33643231690"
+    },
+    {
+      "id": "g9-bills-06",
+      "domain": "bills",
+      "kind": "positive",
+      "rationale": "公共BillAnalysis支持category_comparison。订阅从2900增至5800分，增加2900分，为唯一正增长类别；餐饮-1180、购物-17820、交通-200、住房0分。明确否定订阅变更，周期/重复提示不等于可执行取消。",
+      "inputCanonicalSha256": "07d20aa0b9717969e2857e03c9682ddfb1b9be104a26d0994345ed8e2a14cc03",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "3277b34f848d5022d154ad0743b497ca8efe03bf512e6d9fd5056f1241df6bf0"
+    },
+    {
+      "id": "g9-investment-01",
+      "domain": "investment",
+      "kind": "positive",
+      "rationale": "阶段四允许本人合成持仓只读查询，明确不要赎回。T+0本金420000-占仓20000=可赎400000分，T+2本金650000-占仓50000=可赎600000分。",
+      "inputCanonicalSha256": "05a2194c7dbff468636cc9223ccaf304d8efca6d36d07b3157df30a908fa975c",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "7b8cc430d61d967481563f4d5f45cbcc9137e2afc14e843c7c5d6e8be5e5981d"
+    },
+    {
+      "id": "g9-investment-02",
+      "domain": "investment",
+      "kind": "positive",
+      "rationale": "T+0持仓和金额均明确；425元75分=42575分，小于可赎400000分，预期版本为3。候选不代表授权、占仓或到账。",
+      "inputCanonicalSha256": "bc413c75169ff1e30e07c2a6128450038b5416b2dff3713a809a17e2f51988d4",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "2c7ecf96d5a738c9ccf34608d944f4ef49e17be58f98e6046ae51758ad8f8dc5"
+    },
+    {
+      "id": "g9-investment-03",
+      "domain": "investment",
+      "kind": "positive",
+      "rationale": "产品与金额跨句绑定明确，2100元05分=210005分，小于T+2可赎600000分；版本5。受理不等于到账，不生成额外转账或申购。",
+      "inputCanonicalSha256": "144b119471b5ccf79bd77db3dc17dc35dae00748df4cb2e83b0077e2ace2e6c8",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "1c12a71eb92b299bfcc2be69d26a94df78684c0da1e4cce6372acdc7a198a8ac"
+    },
+    {
+      "id": "g9-investment-04",
+      "domain": "investment",
+      "kind": "clarification",
+      "rationale": "存在两个不同T+0/T+2持仓且两者都足够800元，用户未指明产品，不能擅选；应先澄清持仓来源。",
+      "inputCanonicalSha256": "6aab807d70e1d20461f88173f245f27079609dc8cd827728ffdb71c67e76b3ea",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "c0401ab92a0ec90a2326535e84055d21bad7cc843c0ba7389b84ca5e7fedb39e"
+    },
+    {
+      "id": "g9-investment-05",
+      "domain": "investment",
+      "kind": "no_action",
+      "rationale": "对旧稿的引用与明确否定，不存在当前查询或赎回请求；不得由引用中的金额和产品生成赎回提案。",
+      "inputCanonicalSha256": "43b419a9e7229a335e981a8eef24893f6b301fe958aa21b1ee77dcb0068cbda2",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "5f289c648dc13aabaef261388c8cf7f29c515b8f2ea7480bdd46f33643231690"
+    },
+    {
+      "id": "g9-investment-06",
+      "domain": "investment",
+      "kind": "positive",
+      "rationale": "明确并列只读理财查询与现有现金单笔转账，68元5角=6850分。不要赎回是对投资动作的局部否定，不能取消独立转账，也不能误建筹资目标。",
+      "inputCanonicalSha256": "c6a6bcc771daae0534775491d69fad1c602dc3c5788bf2a34d5da3d45141c8bc",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "ceb61217ded800443f41e12c62f62561e5164d4ec9dac62c494949d670c87dfe"
+    },
+    {
+      "id": "g9-card-01",
+      "domain": "card",
+      "kind": "positive",
+      "rationale": "尾号唯一匹配ACTIVE日常卡，阶段三允许准备CARD_REPORT_LOST，资源版本4；挂失仍需后续逐笔Passkey强验证。",
+      "inputCanonicalSha256": "543a52276fef8dc6e9d255734632d0fecc8203d75a219c38cd75753b21520d40",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "d46013b9c19bc5ae6dd1675e2dceb2b93b1384b85fbc3313c39f0bdefe124246"
+    },
+    {
+      "id": "g9-card-02",
+      "domain": "card",
+      "kind": "positive",
+      "rationale": "卡名和尾号一致唯一匹配LOST卡，解挂为CARD_UNREPORT_LOST版本2，不等于开户、补卡或自动恢复订阅合同。",
+      "inputCanonicalSha256": "c44c89f136ee3b34a1cc1eb00a16fe2ccb6e6155b28b1a2e90e484f8aef354b5",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "a6ea22771090e65c9d8079b5b304df150d246a18f1d4bdf5a32488ffc9bca950"
+    },
+    {
+      "id": "g9-card-03",
+      "domain": "card",
+      "kind": "positive",
+      "rationale": "明确只读卡状态查询。上下文状态ACTIVE，应回答正常/未挂失，不产生挂失或解挂建议；问句中挂失不是当前命令。",
+      "inputCanonicalSha256": "91b46709b61d6b4a77481395bce8b02220b6b5bdf5f20ea168970a21cbb96eb3",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "ff898d450adeb7a7fc1b74490e3d0d20576da0b73bc90a899394374e1a1c9eae"
+    },
+    {
+      "id": "g9-card-04",
+      "domain": "card",
+      "kind": "clarification",
+      "rationale": "该独立上下文两张卡均ACTIVE，用户未说卡名或尾号，真实目标歧义；先问哪张卡，不得默认第一张。",
+      "inputCanonicalSha256": "8daaa92ce6d5a49f007867faea843d2c7bfab5709b05be937acf8b8fc550b83b",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "eb967d5ae5009c7e60e658a19e04a931aaf33178113b976b4faf3a10d05df308"
+    },
+    {
+      "id": "g9-card-05",
+      "domain": "card",
+      "kind": "no_action",
+      "rationale": "引用示例且明确不生成候选，无当前卡片操作。不能因例句中的完整卡尾号就构造挂失提案。",
+      "inputCanonicalSha256": "51a8cc1ee279ef1be8b7d4ef989b382b7daa4e325be0e12ea878c8bdd9c4263c",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "5f289c648dc13aabaef261388c8cf7f29c515b8f2ea7480bdd46f33643231690"
+    },
+    {
+      "id": "g9-card-06",
+      "domain": "card",
+      "kind": "positive",
+      "rationale": "受支持的卡状态与月份账单复合只读任务，两域均需回答，不产生管理动作或资金移动。卡片ACTIVE/LOST来自当前管理上下文，账单金额来自历史流水。",
+      "inputCanonicalSha256": "c31f0749568eee94e76fd692d44d1d1e1d30cc9459e033e583a61c83839391c8",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "0c03cee023b5bd5eff385053bd79ba20f67c4a1c9f088d6637914296b231247b"
+    },
+    {
+      "id": "g9-subscription-01",
+      "domain": "subscription",
+      "kind": "positive",
+      "rationale": "无查询授权的明确订阅查询，阶段三要求先准备SUBSCRIPTION_QUERY候选，确认后才获得短时读取权；不能凭空展示订阅明细。",
+      "inputCanonicalSha256": "c1fcf002584e933680c617d15e3c91c0c1f4625cdb94bc99f7ddd7289e150573",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "1c9744dc6884817fdda29c014953392d0fd81f8eea3971db0c0cb842319aec5f"
+    },
+    {
+      "id": "g9-subscription-02",
+      "domain": "subscription",
+      "kind": "positive",
+      "rationale": "有效授权快照含唯一竹音听书，cancellationSupported=true；明确商户侧取消对应SUBSCRIPTION_CANCEL，版本7、原查询引用。局部否定银行拦截不能替换合同取消。",
+      "inputCanonicalSha256": "571cf957a8ae80acb314d1b59c10b9cd3dac78c1c3d5caf5646e0c76f2cf95f2",
+      "clockTemplateCanonicalSha256": "7b8045fe0e2855ad95e632ebf3fffc16e605c1f7ffed8ae5e0fa08421cf5ad92",
+      "expectedCanonicalSha256": "d68b3e4a96f87c4f67fcb6f5ad63ef7e97ca10aca60ccccc77eae47bba9233ae"
+    },
+    {
+      "id": "g9-subscription-03",
+      "domain": "subscription",
+      "kind": "positive",
+      "rationale": "有效授权快照中城市瑜伽商户不支持系统取消，但允许独立银行拦截。用户明确只要SUBSCRIPTION_BLOCK版本3，不得冒称取消商户合同或退款。",
+      "inputCanonicalSha256": "6add51e659194d64fd29bc25cba91e316cfda9ed63840d8f47f3d63bd024c56c",
+      "clockTemplateCanonicalSha256": "7b8045fe0e2855ad95e632ebf3fffc16e605c1f7ffed8ae5e0fa08421cf5ad92",
+      "expectedCanonicalSha256": "4b2990370c340d8bae975291befbadd85680e725c8395f568ba8c2f7ae9cfd03"
+    },
+    {
+      "id": "g9-subscription-04",
+      "domain": "subscription",
+      "kind": "clarification",
+      "rationale": "有效快照有两项不同订阅，那个没有前文指代，目标不明确。商户合同取消与银行限制也可能不同，应先澄清而非任选一项。",
+      "inputCanonicalSha256": "37000a824b48e1661067b02f06387655972c7b1434851283eb64b6e62f9070a4",
+      "clockTemplateCanonicalSha256": "7b8045fe0e2855ad95e632ebf3fffc16e605c1f7ffed8ae5e0fa08421cf5ad92",
+      "expectedCanonicalSha256": "c16ba831d6796b5a7fcff1c7e5384e74c90a5fa968f39c1d83db06722100c793"
+    },
+    {
+      "id": "g9-subscription-05",
+      "domain": "subscription",
+      "kind": "no_action",
+      "rationale": "历史备注转述与当前明确否定，无订阅任务。拥有查询快照也不赋予当前取消或银行拦截意图。",
+      "inputCanonicalSha256": "98320f8854aa601d9460cd491fdb50a035cf379eb4247423f02d656b7c3123c1",
+      "clockTemplateCanonicalSha256": "7b8045fe0e2855ad95e632ebf3fffc16e605c1f7ffed8ae5e0fa08421cf5ad92",
+      "expectedCanonicalSha256": "5f289c648dc13aabaef261388c8cf7f29c515b8f2ea7480bdd46f33643231690"
+    },
+    {
+      "id": "g9-subscription-06",
+      "domain": "subscription",
+      "kind": "positive",
+      "rationale": "两个独立对象分别明确商户取消与银行拦截，有效查询授权及版本均给定；两种状态语义不能互换，也不能合并成一次自动执行。",
+      "inputCanonicalSha256": "c2740097516a1891df55a2a3a22c34de27fb55e87fe69162f352cb3b6ce2e8fc",
+      "clockTemplateCanonicalSha256": "7b8045fe0e2855ad95e632ebf3fffc16e605c1f7ffed8ae5e0fa08421cf5ad92",
+      "expectedCanonicalSha256": "f147f1b0dc64878773dfdc5277cac001d6a62bad25adabf573fe103e22be5e87"
+    },
+    {
+      "id": "g9-goal-01",
+      "domain": "goal",
+      "kind": "positive",
+      "rationale": "阶段四无赎回来源目标仅包含独立转账节点，但不得旁路生成立即转账提案。用户明确目标名称、唯一收款人、68000分与完整未来截止日。",
+      "inputCanonicalSha256": "33c62b2c4a5add9e078cb17751e4e8cec823df03ae9620bc475a83b525dc2b52",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "e69378d1d40c3875e1d19e91c5fda299334455bb6c105c977d8439072ef74363"
+    },
+    {
+      "id": "g9-goal-02",
+      "domain": "goal",
+      "kind": "positive",
+      "rationale": "目标用途、收款人、金额与日期跨句但唯一明确；1036元8角=103680分。目标截止不是预约支付授权，不应因出现转账语义退回立即支付。",
+      "inputCanonicalSha256": "f6319481fa6fc537a697f8317cc4aa33ca938185c7e3fa6e3bff88c35d361c10",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "35f4407887ca65f451b405579bf4059aab102622461de4818ff9fd0076ef8825"
+    },
+    {
+      "id": "g9-goal-03",
+      "domain": "goal",
+      "kind": "positive",
+      "rationale": "阶段四支持赎回→实际到账→独立授权转账DAG。目标87500分与筹资120000分各自明确，不可强行取同额或把赎回款当已到账现金。",
+      "inputCanonicalSha256": "17e21e8e09ad4e4d4fe26834f7e3ef336a2f80a048db86800a094c152a136227",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "164aaf77f8c0b5cebe8b41ac7e9b0d92cb2d7dab72239d39e325333f09320648"
+    },
+    {
+      "id": "g9-goal-04",
+      "domain": "goal",
+      "kind": "clarification",
+      "rationale": "完整目标截止日缺少年份。参考日不能替用户静默选2026或2027；公开G8N范围明确缺年份澄清，不能退回立即转账。",
+      "inputCanonicalSha256": "f8fd689c91dc44b1ceacd6c02f43c636965aefd6c4fee23be16e0125d8771f3b",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "bacd9b36f26f6c542ea76e23be938821ed6b9f0c1f2d22eb257524116f650a27"
+    },
+    {
+      "id": "g9-goal-05",
+      "domain": "goal",
+      "kind": "no_action",
+      "rationale": "目标草案仅引用且明确当前不建立、不转账、不赎回；主题域为goal，语义no_action，不启动目标或转账领域。",
+      "inputCanonicalSha256": "39fd15b843248f15f049bef9880519f77281b407b325bdda6fff9b8ea0eba83f",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "5f289c648dc13aabaef261388c8cf7f29c515b8f2ea7480bdd46f33643231690"
+    },
+    {
+      "id": "g9-goal-06",
+      "domain": "goal",
+      "kind": "positive",
+      "rationale": "目标用途要求原样、完整斜杠日期应规范为2027-06-09。目标468元3角5分=46835分，独立筹资60000分，T+2来源唯一；远期截止允许受理后实际到账等待，不表示预约自动付款。",
+      "inputCanonicalSha256": "d0bfe10ad4552aea213904ccaf6645ef7e1a1f4df4dc9da8915c0cce7d017d21",
+      "clockTemplateCanonicalSha256": null,
+      "expectedCanonicalSha256": "1aaaa235fc0abc7c8f3a36ff4b99a2dfee1c1135edd3639d452c716bad9482c8"
+    }
+  ]
+}

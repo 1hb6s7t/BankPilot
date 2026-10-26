@@ -1,0 +1,37 @@
+{
+  "file": "/Users/auriel/Desktop/银行agnet/artifacts/submission/BankPilot-资金流程演示-20261026.mp4",
+  "duration": 130.99,
+  "segments": [
+    {
+      "segment": "intro",
+      "duration": 22.13,
+      "narrationDuration": 20.13,
+      "sourceRecording": null,
+      "recordingSlowdown": null
+    },
+    {
+      "segment": "funds",
+      "duration": 42.96,
+      "narrationDuration": 35.14,
+      "sourceRecording": "/Users/auriel/Desktop/银行agnet/docs/evidence/g9v-video-take1/artifacts/g9v-funds-A-real-Monday-T0-79302-ly-confirmed-300-25-payment/video.webm",
+      "recordingSlowdown": 4
+    },
+    {
+      "segment": "recovery",
+      "duration": 31.68,
+      "narrationDuration": 29.67,
+      "sourceRecording": "/Users/auriel/Desktop/银行agnet/docs/evidence/g9v-video-take1/artifacts/g9v-funds-B-actual-UNKNOWN-0633b-ers-the-same-single-payment/video.webm",
+      "recordingSlowdown": 4
+    },
+    {
+      "segment": "closing",
+      "duration": 34.2,
+      "narrationDuration": 32.18,
+      "sourceRecording": null,
+      "recordingSlowdown": null
+    }
+  ],
+  "source": "real new isolated G9Q instance recording, both tests passed",
+  "limitations": "scripted local synthetic funds; virtual WebAuthn; 4x slow playback; system synthetic narration; no live cloud transaction claim",
+  "artifactRelocation": "Moved submission files outside runtime delivery tree to preserve existing source exporter contract; no product code change"
+}

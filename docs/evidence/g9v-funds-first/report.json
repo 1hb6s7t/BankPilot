@@ -1,0 +1,276 @@
+{
+  "config": {
+    "argv": [
+      "/Users/auriel/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/Users/auriel/Desktop/银行agnet/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      ".local/g9v-funds.config.ts"
+    ],
+    "configFile": "/Users/auriel/Desktop/银行agnet/.local/g9v-funds.config.ts",
+    "rootDir": "/Users/auriel/Desktop/银行agnet/.local",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/auriel/Desktop/银行agnet/docs/evidence/g9v-funds-first/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/auriel/Desktop/银行agnet/.local",
+        "testIgnore": [],
+        "testMatch": [
+          "g9v-funds.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/auriel/Desktop/银行agnet/docs/evidence/g9v-funds-first/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/Users/auriel/Desktop/银行agnet/.local",
+        "snapshotDir": "/Users/auriel/Desktop/银行agnet/.local",
+        "testIgnore": [],
+        "testMatch": "g9v-funds.spec.ts",
+        "timeout": 120000,
+        "use": {
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "actionTimeout": 15000,
+          "screenshot": "only-on-failure",
+          "trace": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/auriel/Desktop/银行agnet/docs/evidence/g9v-funds-first/report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "g9v-funds.spec.ts",
+      "file": "g9v-funds.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "A real Monday T0 redemption settles before a separately confirmed 300.25 payment",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1539,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatchObject\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 0\u001b[39m\n\n\u001b[2m  Object {\u001b[22m\n\u001b[2m    \"balance_minor\": \"800000\",\u001b[22m\n\u001b[32m-   \"reserved_minor\": \"0\",\u001b[39m\n\u001b[2m  }\u001b[22m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatchObject\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 0\u001b[39m\n\n\u001b[2m  Object {\u001b[22m\n\u001b[2m    \"balance_minor\": \"800000\",\u001b[22m\n\u001b[32m-   \"reserved_minor\": \"0\",\u001b[39m\n\u001b[2m  }\u001b[22m\n    at /Users/auriel/Desktop/银行agnet/.local/g9v-funds.spec.ts:126:31",
+                    "location": {
+                      "file": "/Users/auriel/Desktop/银行agnet/.local/g9v-funds.spec.ts",
+                      "column": 31,
+                      "line": 126
+                    },
+                    "snippet": "  124 |   expect(initial.goals).toEqual([]); expect(initial.actions).toEqual([]); expect(initial.investmentActions).toEqual([]);\n  125 |   expect(initial.providerTransfers).toEqual([]); expect(initial.providers).toEqual([]); expect(initial.transferProofs).toEqual([]); expect(initial.investmentProofs).toEqual([]);\n> 126 |   expect(initial.accounts[0]).toMatchObject({ balance_minor: '800000', reserved_minor: '0' }); expect(initial.providerBalance).toBe('800000');\n      |                               ^\n  127 |   const portfolio = await read(page, '/api/investments'), immediate = portfolio.positions.filter((p: any) => p.productId === 'synthetic-t0' && p.redemptionBusinessDays === 0);\n  128 |   expect(immediate).toHaveLength(1);\n  129 |   const goal = await createGoal(page, titleA, '300.25', immediate[0].id), redemption = goal.nodes[0].investmentAction;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/auriel/Desktop/银行agnet/.local/g9v-funds.spec.ts",
+                        "column": 31,
+                        "line": 126
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatchObject\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 0\u001b[39m\n\n\u001b[2m  Object {\u001b[22m\n\u001b[2m    \"balance_minor\": \"800000\",\u001b[22m\n\u001b[32m-   \"reserved_minor\": \"0\",\u001b[39m\n\u001b[2m  }\u001b[22m\n\n  124 |   expect(initial.goals).toEqual([]); expect(initial.actions).toEqual([]); expect(initial.investmentActions).toEqual([]);\n  125 |   expect(initial.providerTransfers).toEqual([]); expect(initial.providers).toEqual([]); expect(initial.transferProofs).toEqual([]); expect(initial.investmentProofs).toEqual([]);\n> 126 |   expect(initial.accounts[0]).toMatchObject({ balance_minor: '800000', reserved_minor: '0' }); expect(initial.providerBalance).toBe('800000');\n      |                               ^\n  127 |   const portfolio = await read(page, '/api/investments'), immediate = portfolio.positions.filter((p: any) => p.productId === 'synthetic-t0' && p.redemptionBusinessDays === 0);\n  128 |   expect(immediate).toHaveLength(1);\n  129 |   const goal = await createGoal(page, titleA, '300.25', immediate[0].id), redemption = goal.nodes[0].investmentAction;\n    at /Users/auriel/Desktop/银行agnet/.local/g9v-funds.spec.ts:126:31"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T02:44:53.517Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/auriel/Desktop/银行agnet/docs/evidence/g9v-funds-first/artifacts/g9v-funds-A-real-Monday-T0-79302-ly-confirmed-300-25-payment/test-failed-1.png"
+                    },
+                    {
+                      "name": "api-method-path-status.json",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJtZXRob2QiOiAiR0VUIiwKICAgICJwYXRoIjogIi9hcGkvc2Vzc2lvbiIsCiAgICAic3RhdHVzIjogNDAxCiAgfSwKICB7CiAgICAibWV0aG9kIjogIkdFVCIsCiAgICAicGF0aCI6ICIvYXBpL2Rhc2hib2FyZCIsCiAgICAic3RhdHVzIjogNDAxCiAgfSwKICB7CiAgICAibWV0aG9kIjogIlBPU1QiLAogICAgInBhdGgiOiAiL2FwaS9hdXRoL3NpZ24taW4vZW1haWwiLAogICAgInN0YXR1cyI6IDIwMAogIH0sCiAgewogICAgIm1ldGhvZCI6ICJHRVQiLAogICAgInBhdGgiOiAiL2FwaS9zZXNzaW9uIiwKICAgICJzdGF0dXMiOiAyMDAKICB9LAogIHsKICAgICJtZXRob2QiOiAiR0VUIiwKICAgICJwYXRoIjogIi9hcGkvZGFzaGJvYXJkIiwKICAgICJzdGF0dXMiOiAyMDAKICB9LAogIHsKICAgICJtZXRob2QiOiAiR0VUIiwKICAgICJwYXRoIjogIi9hcGkvbWFuYWdlbWVudCIsCiAgICAic3RhdHVzIjogMjAwCiAgfSwKICB7CiAgICAibWV0aG9kIjogIkdFVCIsCiAgICAicGF0aCI6ICIvYXBpL2NvbnZlcnNhdGlvbnMiLAogICAgInN0YXR1cyI6IDIwMAogIH0sCiAgewogICAgIm1ldGhvZCI6ICJQT1NUIiwKICAgICJwYXRoIjogIi9hcGkvY29udmVyc2F0aW9ucyIsCiAgICAic3RhdHVzIjogMjAxCiAgfSwKICB7CiAgICAibWV0aG9kIjogIkdFVCIsCiAgICAicGF0aCI6ICIvYXBpL2NvbnZlcnNhdGlvbnMvYjgzNTRmNjUtYjcxZi00YWM5LThiNDYtZDU4NGFiYTgwMDk4L21lc3NhZ2VzIiwKICAgICJzdGF0dXMiOiAyMDAKICB9LAogIHsKICAgICJtZXRob2QiOiAiR0VUIiwKICAgICJwYXRoIjogIi9hcGkvY29udmVyc2F0aW9ucy9iODM1NGY2NS1iNzFmLTRhYzktOGI0Ni1kNTg0YWJhODAwOTgvcmVjb3ZlcnkiLAogICAgInN0YXR1cyI6IDIwMAogIH0KXQ=="
+                    },
+                    {
+                      "name": "browser-errors.json",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/auriel/Desktop/银行agnet/docs/evidence/g9v-funds-first/artifacts/g9v-funds-A-real-Monday-T0-79302-ly-confirmed-300-25-payment/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/auriel/Desktop/银行agnet/.local/g9v-funds.spec.ts",
+                    "column": 31,
+                    "line": 126
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ef47f53baf6c423e0116-f493706564fa47e1ea25",
+          "file": "g9v-funds.spec.ts",
+          "line": 121,
+          "column": 1
+        },
+        {
+          "title": "B actual UNKNOWN retains reservation and refresh recovers the same single payment",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 98,
+                  "error": {
+                    "message": "Error: ENOENT: no such file or directory, open '/Users/auriel/Desktop/银行agnet/.local/g9v-funds-state/g9v-funds-a-completed.json'",
+                    "stack": "Error: ENOENT: no such file or directory, open '/Users/auriel/Desktop/银行agnet/.local/g9v-funds-state/g9v-funds-a-completed.json'\n    at json (/Users/auriel/Desktop/银行agnet/.local/g9v-funds.spec.ts:11:49)\n    at /Users/auriel/Desktop/银行agnet/.local/g9v-funds.spec.ts:190:19",
+                    "location": {
+                      "file": "/Users/auriel/Desktop/银行agnet/.local/g9v-funds.spec.ts",
+                      "column": 49,
+                      "line": 11
+                    },
+                    "snippet": "   9 | const EXPECTED_MANIFEST = '63258314b0e77b5f557ff8c9477fa7198dd14f6e7f205e99f477dc18b02411dd';\n  10 | const sha = (bytes: string | Buffer) => createHash('sha256').update(bytes).digest('hex');\n> 11 | const json = async (path: string) => JSON.parse(await readFile(path, 'utf8'));\n     |                                                 ^\n  12 | const plain = (v: unknown): any => JSON.parse(JSON.stringify(v));\n  13 | const required = (name: string) => { const v = process.env[name]; if (!v) throw new Error(`Explicit G9V funds binding required: ${name}`); return v; };\n  14 | const attach = (name: string, value: unknown) => test.info().attach(name, { body: JSON.stringify(value, null, 2), contentType: 'application/json' });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/auriel/Desktop/银行agnet/.local/g9v-funds.spec.ts",
+                        "column": 49,
+                        "line": 11
+                      },
+                      "message": "Error: ENOENT: no such file or directory, open '/Users/auriel/Desktop/银行agnet/.local/g9v-funds-state/g9v-funds-a-completed.json'\n\n   9 | const EXPECTED_MANIFEST = '63258314b0e77b5f557ff8c9477fa7198dd14f6e7f205e99f477dc18b02411dd';\n  10 | const sha = (bytes: string | Buffer) => createHash('sha256').update(bytes).digest('hex');\n> 11 | const json = async (path: string) => JSON.parse(await readFile(path, 'utf8'));\n     |                                                 ^\n  12 | const plain = (v: unknown): any => JSON.parse(JSON.stringify(v));\n  13 | const required = (name: string) => { const v = process.env[name]; if (!v) throw new Error(`Explicit G9V funds binding required: ${name}`); return v; };\n  14 | const attach = (name: string, value: unknown) => test.info().attach(name, { body: JSON.stringify(value, null, 2), contentType: 'application/json' });\n    at json (/Users/auriel/Desktop/银行agnet/.local/g9v-funds.spec.ts:11:49)\n    at /Users/auriel/Desktop/银行agnet/.local/g9v-funds.spec.ts:190:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T02:44:55.456Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/auriel/Desktop/银行agnet/docs/evidence/g9v-funds-first/artifacts/g9v-funds-B-actual-UNKNOWN-0633b-ers-the-same-single-payment/test-failed-1.png"
+                    },
+                    {
+                      "name": "api-method-path-status.json",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "browser-errors.json",
+                      "contentType": "application/json",
+                      "body": "W10="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/auriel/Desktop/银行agnet/docs/evidence/g9v-funds-first/artifacts/g9v-funds-B-actual-UNKNOWN-0633b-ers-the-same-single-payment/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/auriel/Desktop/银行agnet/.local/g9v-funds.spec.ts",
+                    "column": 49,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ef47f53baf6c423e0116-8a05606b492f3d1d986e",
+          "file": "g9v-funds.spec.ts",
+          "line": 189,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-26T02:44:53.188Z",
+    "duration": 2467.2290000000003,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,19 @@
+name: bankpilot
+services:
+  postgres:
+    image: postgres:17-bookworm@sha256:858bb5e98eed02eb8cafbcdc007f9a65d1b613972028944a8ec2133ccaf80d27
+    environment:
+      POSTGRES_USER: bankpilot
+      POSTGRES_PASSWORD: bankpilot-local
+      POSTGRES_DB: bankpilot
+    ports:
+      - '127.0.0.1:55432:5432'
+    volumes:
+      - bankpilot-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U bankpilot -d bankpilot']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+volumes:
+  bankpilot-data:

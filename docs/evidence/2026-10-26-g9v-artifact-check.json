@@ -1,0 +1,71 @@
+{
+  "presentation": {
+    "sha256": "b51ec62eb29a23f3aae72f93633fa0906d29047918e225514e50e173379c963d",
+    "bytes": 563934,
+    "slides": 10,
+    "embeddedImages": 3,
+    "embeddedImageBytes": [
+      176040,
+      180982,
+      152185
+    ],
+    "integrityPass": true,
+    "nativePowerPointTested": false
+  },
+  "video": {
+    "sha256": "5fa03b864a543aab47e610e7bce407b4180a23a5b27ea5a81260e547d17198fc",
+    "bytes": 4986834,
+    "durationSeconds": 130.99,
+    "fullDecodePass": true,
+    "finalFramesExtracted": [
+      5,
+      40,
+      80,
+      110
+    ],
+    "syntheticNarration": true,
+    "humanAudioReview": false
+  },
+  "ports": [
+    {
+      "port": 5178,
+      "listening": false
+    },
+    {
+      "port": 8787,
+      "listening": false
+    },
+    {
+      "port": 50247,
+      "listening": false
+    },
+    {
+      "port": 50248,
+      "listening": false
+    },
+    {
+      "port": 50249,
+      "listening": false
+    },
+    {
+      "port": 50250,
+      "listening": false
+    },
+    {
+      "port": 62730,
+      "listening": false
+    },
+    {
+      "port": 62731,
+      "listening": false
+    },
+    {
+      "port": 62732,
+      "listening": false
+    },
+    {
+      "port": 62733,
+      "listening": false
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "runId": "aad0fad3-e5ea-4c33-b7a4-33bce0558077",
+  "createdAtUtc": "2026-10-26T08:17:19.137Z",
+  "updatedAtUtc": "2026-10-26T08:18:51.512Z",
+  "stage": "cleaned",
+  "admin": {
+    "host": "127.0.0.1",
+    "port": 55432,
+    "database": "postgres",
+    "role": "bankpilot"
+  },
+  "database": {
+    "name": "bp_g9g_test_aad0fad3e5ea4c33b7a433bce0558077",
+    "createIssued": true,
+    "created": true,
+    "oid": 2817859,
+    "owner": "bankpilot"
+  },
+  "initialization": "Better Auth getMigrations/runMigrations; no setup.ts, API migration, user, account, or demo seed",
+  "child": {
+    "command": "pnpm check",
+    "startedAtUtc": "2026-10-26T08:17:19.713Z",
+    "endedAtUtc": "2026-10-26T08:18:51.329Z",
+    "exitCode": 0,
+    "signal": null,
+    "group": {
+      "checked": true,
+      "termSent": false,
+      "killSent": false,
+      "gone": true
+    }
+  },
+  "cleanup": {
+    "attempted": true,
+    "dropped": true,
+    "verifiedAbsent": true,
+    "identityMatched": true
+  },
+  "exitCode": 0
+}

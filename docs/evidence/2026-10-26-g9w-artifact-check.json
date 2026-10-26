@@ -1,0 +1,23 @@
+{
+  "presentation": {
+    "sha256": "f43ea3191281bca2e95129157445613e2ad553b7a7b57d561cbbd6122c90ddfa",
+    "bytes": 564015,
+    "slides": 10,
+    "images": 3,
+    "structureLayoutAndReimportPassed": true,
+    "nativePowerPointTested": false
+  },
+  "video": {
+    "sha256": "b0b09667d57a92cf10a94368526b47ff10eb2c40f4134217d389739e31d70fa4",
+    "bytes": 5058269,
+    "durationSeconds": 135.43,
+    "fullDecodePassed": true,
+    "hasNonSilentSyntheticNarration": true,
+    "audioMetrics": [
+      "mean_volume: -21.6 dB",
+      "max_volume: -5.8 dB"
+    ],
+    "humanListeningReview": false
+  },
+  "scope": "Final G9W evidence captions; original G9V scripted recordings unchanged"
+}

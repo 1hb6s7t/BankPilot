@@ -1,0 +1,11 @@
+import { createPool } from '../../api/src/config.js';
+import { createCore, startWorker } from '../../../packages/core/src/index.js';
+import { createInvestment } from '../../../packages/core/src/investment.js';
+const pool = createPool();
+const core = createCore(pool, { reconcileDelayMs: 15_000 });
+const investment = createInvestment(pool, { reconcileDelayMs: 15_000 });
+const worker = await startWorker(pool, core, investment);
+console.log('BankPilot pg-boss worker started');
+const stop = async () => { await worker.stop(); await pool.end(); process.exit(0); };
+process.on('SIGINT', () => { void stop(); });
+process.on('SIGTERM', () => { void stop(); });
