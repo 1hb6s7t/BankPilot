@@ -1,7 +1,7 @@
 {
-  "version": "bankpilot-submission-candidate-v1",
+  "version": "bankpilot-submission-20261028-v2",
   "repository": "https://github.com/1hb6s7t/BankPilot",
-  "productBaseline": "G9Q",
+  "productBaseline": "G9Q plus graphite/apricot workbench UI verified on 2026-10-28",
   "latestModelValidation": "G9W known 8/8, no transaction execution",
   "files": [
     {
@@ -10,14 +10,19 @@
       "sha256": "77e1a9d7da37d8dad7f36c19435414465ece2a23225a5001351b4ec935d174dc"
     },
     {
+      "path": ".gitattributes",
+      "bytes": 93,
+      "sha256": "15c9ec032a90145060040bbf108f44288ee214dc58ea3396e57a036e3b53dbd2"
+    },
+    {
       "path": ".gitignore",
-      "bytes": 92,
-      "sha256": "128ef0a415fb0eda87b867ab160060eb61417c354521d5a9e11a2db4758ec452"
+      "bytes": 342,
+      "sha256": "7d114a1015806f380d1f5af3a67a7a5573fc054812443293525151e6d1635700"
     },
     {
       "path": "README.md",
-      "bytes": 29674,
-      "sha256": "a5ca75c345af91ee6ac7f04d6e7b488593f9bd510d7db6a5cbdc8886403eea2e"
+      "bytes": 5801,
+      "sha256": "bc3da7707904c5cd02ea610b95c0a1d2669341e4225b012b5ef75f0be84948dc"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -96,13 +101,13 @@
     },
     {
       "path": "apps/web/src/App.tsx",
-      "bytes": 85427,
-      "sha256": "f9c97842eef100436695c0c3af6310b8fb22a56adcea7e3e85fe5b86cfd937ba"
+      "bytes": 89117,
+      "sha256": "2fdaac3f2fe552c9233edc669aaa0542a449b5e6a05a53eaababe3e768342638"
     },
     {
       "path": "apps/web/src/ConversationsPanel.tsx",
-      "bytes": 38515,
-      "sha256": "23a0e159498ea5e57fc2a19ef6782cbe5dcee939d684b0e13232ef078f0d371c"
+      "bytes": 39068,
+      "sha256": "2204e19a27f17221aa2646534a772a3f6a98dde2d88b99f0046638dba477dfdb"
     },
     {
       "path": "apps/web/src/ErrorBoundary.tsx",
@@ -128,6 +133,16 @@
       "path": "apps/web/src/PreparationRequestsPage.tsx",
       "bytes": 14499,
       "sha256": "54ddd3151d13de1aaf410581c922790beeb41589b47e7739c720fc045206e67a"
+    },
+    {
+      "path": "apps/web/src/WorkbenchWidgets.css",
+      "bytes": 8560,
+      "sha256": "353bcbc7316ea475b8306432f866f8d158fbc90d570661fe8b398088ff2c6791"
+    },
+    {
+      "path": "apps/web/src/WorkbenchWidgets.tsx",
+      "bytes": 9012,
+      "sha256": "7012f357992443e6821d00e5cddd03840139b575a02550014288667c4c89ec3b"
     },
     {
       "path": "apps/web/src/actionStatus.ts",
@@ -176,13 +191,18 @@
     },
     {
       "path": "apps/web/src/styles.css",
-      "bytes": 76801,
-      "sha256": "5a9369a070242920887b0d6697096920f89855dc285cb16176c69bcc5cf2862b"
+      "bytes": 102637,
+      "sha256": "54828718375288993e19cb0824d997113c2401d0102013f7ab3e3fb526cf114c"
     },
     {
       "path": "apps/web/src/vite-env.d.ts",
       "bytes": 38,
       "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5"
+    },
+    {
+      "path": "apps/web/src/workbenchOverviewModel.ts",
+      "bytes": 2721,
+      "sha256": "9d20805e43c2a33cfb58be0afe273bd01e5a71ec9eee64b422d78a3a5c057e5e"
     },
     {
       "path": "apps/web/vite.config.ts",
@@ -193,46 +213,6 @@
       "path": "apps/worker/src/main.ts",
       "bytes": 657,
       "sha256": "7edbb2f650299fdab1ad340d97277f3577196d5a59eb13f317d9caa0ca1fb30b"
-    },
-    {
-      "path": "artifacts/submission/BankPilot-答辩稿-20261026.pptx",
-      "bytes": 564015,
-      "sha256": "f43ea3191281bca2e95129157445613e2ad553b7a7b57d561cbbd6122c90ddfa"
-    },
-    {
-      "path": "artifacts/submission/BankPilot-资金流程演示-20261026.mp4",
-      "bytes": 5058269,
-      "sha256": "b0b09667d57a92cf10a94368526b47ff10eb2c40f4134217d389739e31d70fa4"
-    },
-    {
-      "path": "artifacts/submission/README.md",
-      "bytes": 4154,
-      "sha256": "fb5432205aad99b7e17c9e7a51bb6ad9621213af11f1ed88623522e3bb864b18"
-    },
-    {
-      "path": "artifacts/submission/overview.md",
-      "bytes": 660,
-      "sha256": "7bffd3faa09b21f63946cf0f59b7f4bca3bb17bb5ccf638b4859e8e997abe631"
-    },
-    {
-      "path": "artifacts/submission/security-self-assessment.md",
-      "bytes": 7213,
-      "sha256": "c7215c76ce7a13259a48f4c7854d4100fb63fc93eb49fa9dd0e63d92417e34a4"
-    },
-    {
-      "path": "artifacts/submission/slides-outline.md",
-      "bytes": 4546,
-      "sha256": "4e3feb600ea95ae7f7a792ae9d233b917634de7006f13d5e575a78d11f8a342f"
-    },
-    {
-      "path": "artifacts/submission/technical-design.md",
-      "bytes": 8919,
-      "sha256": "8e3777bd4a00cdbbcab9a1d948acb8148617eda651593ce0d3a5fc788eec1701"
-    },
-    {
-      "path": "artifacts/submission/video-script.md",
-      "bytes": 4586,
-      "sha256": "9d40bd4ead62f180c783683fbf15d526d21d8b8338d72f60d24629dcdbaf43b2"
     },
     {
       "path": "compose.yaml",
@@ -248,6 +228,11 @@
       "path": "delivery/vite.config.ts",
       "bytes": 740,
       "sha256": "b6e85419fdd10f88996b7e65bdd15be1209e68041ca3d94654ea540627896b5d"
+    },
+    {
+      "path": "docs/deployment.md",
+      "bytes": 3100,
+      "sha256": "cbc026b62fa66052195de395679a53f067cd5f2302722415bf73599a4fb16401"
     },
     {
       "path": "docs/evidence/2026-10-25-g9j-source-snapshot.json",
@@ -390,29 +375,24 @@
       "sha256": "67f2fce82bc7f33ca0a206c3beed423f693c678469153df0d0b166487befc9bb"
     },
     {
+      "path": "docs/evidence/2026-10-28-submission-source-tests.log",
+      "bytes": 34896,
+      "sha256": "fa992a48914c4c29b0cbea0377cb79edac2e39358cb44d8dd2467ebe94c54629"
+    },
+    {
+      "path": "docs/evidence/2026-10-28-submission-source-verification.json",
+      "bytes": 1445,
+      "sha256": "7381af38b2be3a362d8510193e4b1a5c2f090d353567ee6b21d23ba6e91076e4"
+    },
+    {
+      "path": "docs/evidence/2026-10-28-tested-source-manifest.json",
+      "bytes": 105947,
+      "sha256": "bad6f595e1c30459f33d1929a7c40664fff6fb94a9f2310fc4ceb0922e9ea49d"
+    },
+    {
       "path": "docs/evidence/g9v-funds-first/report.json",
       "bytes": 15488,
       "sha256": "f61d92baf6c531066fa541bc689d16faeacd6ae992ee0dedfc5f23e6a2e2e485"
-    },
-    {
-      "path": "docs/evidence/g9v-funds-r2/artifacts/g9v-funds-A-real-Monday-T0-79302-ly-confirmed-300-25-payment/a-completed-original-receipts-after-relogin.png",
-      "bytes": 180982,
-      "sha256": "5b420457de99c527ca3ed012e5e3d62ad4a0facc08fb8f7808b0e2aec9bc2b97"
-    },
-    {
-      "path": "docs/evidence/g9v-funds-r2/artifacts/g9v-funds-A-real-Monday-T0-79302-ly-confirmed-300-25-payment/a-settled-no-payment-or-payment-authorization.png",
-      "bytes": 176040,
-      "sha256": "af196a43fb03beae2be5d4d21e54abf2720f3b0b3796e46c9277daa426024a71"
-    },
-    {
-      "path": "docs/evidence/g9v-funds-r2/artifacts/g9v-funds-B-actual-UNKNOWN-0633b-ers-the-same-single-payment/b-original-payment-receipt-after-refresh.png",
-      "bytes": 152185,
-      "sha256": "27bc8436b1db8226aeed027c808bd91c5fbbf44c672d64623ff6061ec21adf62"
-    },
-    {
-      "path": "docs/evidence/g9v-funds-r2/artifacts/g9v-funds-B-actual-UNKNOWN-0633b-ers-the-same-single-payment/b-unknown-preserves-reservation.png",
-      "bytes": 162652,
-      "sha256": "e406cb33ee0c23db7b480a502c863e05d8e837673e35179fa88524c41f58a471"
     },
     {
       "path": "docs/evidence/g9v-funds-r2/report.json",
@@ -453,16 +433,6 @@
       "path": "docs/evidence/g9v-live-2026-10-26T06-22-50-039Z-13b9e29a-b103-4b20-aeb2-5703e805ff45/requests.jsonl",
       "bytes": 6135,
       "sha256": "b0dbbfba040b6e3c899035cddfc0fbd559ab26b28f14d6598e3769245784bbdf"
-    },
-    {
-      "path": "docs/evidence/g9v-video-take1/artifacts/g9v-funds-A-real-Monday-T0-79302-ly-confirmed-300-25-payment/video.webm",
-      "bytes": 2329629,
-      "sha256": "4607f757d5d9c14778ff358619cd85c1a3699a251c9d4a789d1195f33aadb3ba"
-    },
-    {
-      "path": "docs/evidence/g9v-video-take1/artifacts/g9v-funds-B-actual-UNKNOWN-0633b-ers-the-same-single-payment/video.webm",
-      "bytes": 1791394,
-      "sha256": "1a5c421c20eae403e09bf7f8bcd3835768fb4e1702bc965ced6e648183ede68d"
     },
     {
       "path": "docs/evidence/g9v-video-take1/report.json",
@@ -1071,8 +1041,33 @@
     },
     {
       "path": "docs/submission-readiness.md",
-      "bytes": 5253,
-      "sha256": "d3bf523b9d2c49f6075d26f8a9a4f1692ef6315474b3592ef3069fd4514fd079"
+      "bytes": 1585,
+      "sha256": "3af2a1b05f840362b1d843196ea0286f627ed00d03d5e6aff7d55d8668988af5"
+    },
+    {
+      "path": "docs/submission/overview.txt",
+      "bytes": 489,
+      "sha256": "adeb39f670fa978fe82259bc4f05d723a7fbc1d2e4300e77bf00887573bc2ad8"
+    },
+    {
+      "path": "docs/submission/security-self-assessment.md",
+      "bytes": 13700,
+      "sha256": "f735d8858cfb48de08e030f0c35ebeac27de06852249f293570944ae3f2fc809"
+    },
+    {
+      "path": "docs/submission/technical-design.md",
+      "bytes": 20721,
+      "sha256": "af57ad69ee3365f442a0e9e24bcfe3e0e8720f1414f3496ff8706b02f41a1e26"
+    },
+    {
+      "path": "docs/submission/video-evidence.md",
+      "bytes": 1461,
+      "sha256": "cba21c4bfbf3d9b99ad0927e5676666aef849f8eafa477d6dd526fee5441da55"
+    },
+    {
+      "path": "docs/testing.md",
+      "bytes": 2684,
+      "sha256": "82b52e9c4f1e3ed7b98e40350f076826a11967dcad27f0992a7fe9170ffbf70c"
     },
     {
       "path": "evals/ablation-score.ts",
@@ -2945,6 +2940,11 @@
       "sha256": "98ce9cde548f8afdc4f88338b2515a902d603c93762cbf2653ed1e081103bd0a"
     },
     {
+      "path": "tests/workbench-overview.test.ts",
+      "bytes": 3402,
+      "sha256": "872e1a7a57ab3a5d97b88a050b7642b0c1096caa37109b909990276db53f5400"
+    },
+    {
       "path": "tsconfig.json",
       "bytes": 362,
       "sha256": "d10cb79e7e43cd43f59b5a9160610e323a74ce4ab941d4d06edf31aab3b3a02e"
@@ -2967,26 +2967,48 @@
   ],
   "fileCount": 592,
   "sourceTests": {
-    "testFiles": 134,
-    "passed": 3420,
+    "evidence": "docs/evidence/2026-10-28-submission-source-verification.json",
+    "testFiles": 135,
+    "passed": 3426,
     "typecheck": true,
     "build": true,
-    "sameDeveloperMachine": true
+    "sameDeveloperMachine": true,
+    "finalZipReinstalledAndRetested": false
   },
   "testedCopyToReleaseChanges": {
     "productAndTestCodeChanged": false,
-    "documentationUpdated": [
+    "documentationAndIgnoreChanges": [
+      ".gitignore",
       "README.md",
-      "docs/g9v-source-test-handoff.md",
-      "docs/g9v-submission-validation.md",
-      "docs/ideal-state-acceptance.md",
       "docs/submission-readiness.md"
+    ],
+    "newDocumentationAndPackagingFiles": [
+      ".gitattributes",
+      "docs/deployment.md",
+      "docs/evidence/2026-10-28-submission-source-tests.log",
+      "docs/evidence/2026-10-28-submission-source-verification.json",
+      "docs/evidence/2026-10-28-tested-source-manifest.json",
+      "docs/submission/overview.txt",
+      "docs/submission/security-self-assessment.md",
+      "docs/submission/technical-design.md",
+      "docs/submission/video-evidence.md",
+      "docs/testing.md"
+    ],
+    "excludedHistoricalMedia": [
+      "docs/evidence/g9v-funds-r2/artifacts/g9v-funds-A-real-Monday-T0-79302-ly-confirmed-300-25-payment/a-completed-original-receipts-after-relogin.png",
+      "docs/evidence/g9v-funds-r2/artifacts/g9v-funds-A-real-Monday-T0-79302-ly-confirmed-300-25-payment/a-settled-no-payment-or-payment-authorization.png",
+      "docs/evidence/g9v-funds-r2/artifacts/g9v-funds-B-actual-UNKNOWN-0633b-ers-the-same-single-payment/b-original-payment-receipt-after-refresh.png",
+      "docs/evidence/g9v-funds-r2/artifacts/g9v-funds-B-actual-UNKNOWN-0633b-ers-the-same-single-payment/b-unknown-preserves-reservation.png",
+      "docs/evidence/g9v-video-take1/artifacts/g9v-funds-A-real-Monday-T0-79302-ly-confirmed-300-25-payment/video.webm",
+      "docs/evidence/g9v-video-take1/artifacts/g9v-funds-B-actual-UNKNOWN-0633b-ers-the-same-single-payment/video.webm"
     ]
   },
   "limits": [
-    "Candidate only, not formal contest submission",
-    "Local synthetic bank, virtual WebAuthn",
-    "No .env, token, runtime private state or node_modules included",
-    "Complete historical evidence intentionally not distributed"
+    "Local synthetic bank, controlled verification; not a real banking or cloud-to-payment acceptance",
+    "No .env, token, private runtime state, node_modules or video editing project included",
+    "Complete historical evidence intentionally not distributed; missing historical media is not required to run automated tests",
+    "Current product, script, test and runtime configuration bytes match the independently tested source copy",
+    "Final ZIP CRC, file set, per-file SHA256 and fresh extraction verified separately from execution tests",
+    "GitHub upload is not contest portal submission"
   ]
 }

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AssistantRuntimeProvider, ComposerPrimitive, MessagePrimitive, ThreadPrimitive, useExternalStoreRuntime, type AppendMessage, type ThreadMessageLike } from '@assistant-ui/react';
-import { LockKeyhole, Plus, RefreshCw, Send, Sparkles } from 'lucide-react';
+import { LockKeyhole, Plus, RefreshCw, Send, Landmark, ArrowLeftRight, FileText, ChevronDown } from 'lucide-react';
 import type { ChatMessage, Clarification, ClarificationAnswer, Conversation, ConversationCommand, ConversationEnvelope, ConversationHistory, ConversationRecoveryItem } from '../../../packages/contracts/src/conversations';
 import type { PlanningFailure } from '../../../packages/contracts/src';
 import { api, ApiError } from './api';
@@ -375,9 +375,10 @@ export function ConversationsPanel({ ownerId, onViewPlan, onPlanning, onError }:
   });
 
   return <AssistantRuntimeProvider runtime={runtime}><div className="chat-thread persistent-chat">
+    <details className="conversation-tools" open={Boolean(listError || recoveryError)}><summary><span>聊天记录与待办</span>{recovery.items.length > 0 && <b>{recovery.items.length} 项待处理</b>}<ChevronDown size={14} /></summary>
     <div className="conversation-toolbar"><label>聊天<select aria-label="选择聊天" value={conversationId ?? ''} disabled={hydrating || sending} onChange={event => void selectConversation(event.target.value)}>{!conversationId && <option value="">正在恢复…</option>}{conversations.map(item => <option key={item.id} value={item.id}>{item.title || '新聊天'}</option>)}</select></label><button aria-label="新建聊天" disabled={hydrating || sending} onClick={() => void newConversation()}><Plus size={14} />新聊天</button><button aria-label="重载聊天历史" disabled={hydrating || sending} onClick={() => void reload()}><RefreshCw size={14} /></button></div>
     {(nextConversations || listError) && <div className="conversation-pagination">{nextConversations && <button disabled={loadingConversations} onClick={() => void loadMoreConversations()}>{loadingConversations ? '读取中…' : '加载更多聊天'}</button>}{listError && <span role="alert">{listError}<button disabled={loadingConversations} onClick={() => nextConversations ? void loadMoreConversations() : setListRetry(value => value + 1)}>重试读取聊天列表</button></span>}</div>}
-    {conversationId && <section className="chat-recovery" aria-label="待处理请求"><header><strong>待处理请求</strong><span>第 {recovery.previous.length + 1} 页</span><button disabled={loadingRecovery || hydrating} onClick={() => void readRecovery(conversationId, gate.current.capture())}>刷新待处理请求</button></header>
+    {conversationId && <details className="chat-recovery" aria-label="待处理请求" open={Boolean(recoveryError)}><summary><span>待处理请求</span><b>{recovery.items.length ? `本页 ${recovery.items.length} 项` : '查看历史与恢复'}</b><ChevronDown size={14} /></summary><header><strong>待处理请求</strong><span>第 {recovery.previous.length + 1} 页</span><button disabled={loadingRecovery || hydrating} onClick={() => void readRecovery(conversationId, gate.current.capture())}>刷新待处理请求</button></header>
       <p>仅显示本页事项。可翻页查找更早请求，或回到最新页查看变化；查看详情不会重新办理。</p>
       {recoveryError && <p role="alert">{recoveryError}</p>}
       <div className="chat-recovery-items">{!recovery.items.length && !loadingRecovery && <p>本页没有待处理请求。可回到最新页刷新，或查看聊天消息。</p>}
@@ -390,12 +391,13 @@ export function ConversationsPanel({ ownerId, onViewPlan, onPlanning, onError }:
           {item.clarification && <><button disabled={blocked} onClick={() => void commandAction(item.commandId, false, true)}>继续补充此请求</button><button disabled={blocked} onClick={() => void cancelClarification({ ...item.clarification!, parentCommandId: item.commandId })}>取消这次请求</button></>}
         </article>;
       })}</div><footer><button disabled={loadingRecovery || !recovery.previous.length} onClick={() => void readRecovery(conversationId, gate.current.capture(), 'previous')}>上一页待处理请求</button><button disabled={loadingRecovery || recovery.nextCursor === undefined} onClick={() => void readRecovery(conversationId, gate.current.capture(), 'next')}>下一页待处理请求</button>{recovery.cursor !== undefined && <button disabled={loadingRecovery} onClick={() => void readRecovery(conversationId, gate.current.capture(), 'first')}>回到最新待处理请求</button>}{loadingRecovery && <span role="status">正在读取待处理请求…</span>}</footer>
-    </section>}
+    </details>}
+    </details>
     <ThreadPrimitive.Root className="thread-root"><ThreadPrimitive.Viewport className="thread-viewport" autoScroll turnAnchor="bottom">
       {before !== undefined && <button className="chat-history-button" disabled={hydrating || sending || loadingEarlier} onClick={() => void reload(true)}>{loadingEarlier ? '读取中…' : '加载更早消息'}</button>}
       {!messages.length && !hydrating && <div className="chat-introduction">你好，我是 BankPilot。描述你要办理的事情，授权前请核对收款人、金额与风险等级。聊天历史会保存在当前账号。</div>}
       <ThreadPrimitive.Messages>{({ message }) => <MessagePrimitive.Root className={`chat-message chat-message-${message.role}`}>
-        {message.role !== 'user' && <div className="message-avatar"><Sparkles size={14} /></div>}
+        {message.role !== 'user' && <div className="message-avatar"><Landmark size={14} /></div>}
         <div className="message-content"><MessagePrimitive.Parts /><span className="message-time">{message.createdAt ? time(message.createdAt.toString()) : ''}</span></div>
         {message.role === 'user' && <div className="message-user-avatar">我</div>}
       </MessagePrimitive.Root>}</ThreadPrimitive.Messages>
@@ -405,7 +407,7 @@ export function ConversationsPanel({ ownerId, onViewPlan, onPlanning, onError }:
       {selectedCommandId.current && <button className="chat-history-button" disabled={blocked} onClick={() => void showLatestRequest()}>查看最新请求</button>}
       {timelineCommands.map(command => {
         const view = conversationCommandView(command);
-        return <div key={command.commandId} className="chat-command"><div><strong>请求 · 第 {command.revision} 版</strong><span>{view.title}</span></div>
+        return <div key={command.commandId} className={`chat-command chat-command-${command.status}`}><div><strong>请求 · 第 {command.revision} 版</strong><span>{view.title}</span></div>
           {view.message && <p role="status">{view.message}</p>}
           {view.canViewPlan && <button disabled={blocked} onClick={() => void commandAction(command, false)}>查看计划 · 刷新动作状态</button>}
           {view.canRetry && <button disabled={blocked} onClick={() => void commandAction(command, true)}>{command.status === 'pending' ? '继续原请求' : '重试原请求'}</button>}
@@ -430,7 +432,7 @@ export function ConversationsPanel({ ownerId, onViewPlan, onPlanning, onError }:
           {continuation.requestedSlots.includes('targetDate') && <label>目标日期<input aria-label="补充目标日期" disabled={blocked} value={answer.targetDate ?? ''} placeholder="例如：2027年2月15日" onChange={event => setAnswer(current => ({ ...current, targetDate: event.target.value }))} /></label>}
           <button disabled={blocked || !typedReady} onClick={() => { if (!conversationId || !typedReady) return; const candidate = continuation.candidates.find(item => item.id === answer.payeeId); const suffix = candidate?.maskedNumber.match(/(\d{4})$/)?.[1]; const values = { ...answer, ...(suffix ? { payeeSuffix: suffix } : {}) }; const text = [suffix && `尾号${suffix}`, answer.amount, answer.targetDate].filter(Boolean).join('，'); void submit(createSubmission(conversationId, text, continuation, values)); }}>提交补充</button>
         </div>}
-        {!continuation && <><div className="suggestion-row"><span className="suggestion-label">试试这个：</span><button onClick={() => void send('给林晓转600元')} disabled={blocked}><Sparkles size={13} />给林晓转600元</button><button onClick={() => void send('查本月账单，给林晓转600元，不影响房租和生活费')} disabled={blocked}><Sparkles size={13} />账单联动与资金保护</button></div>
+        {!continuation && <>{!messages.length && <div className="suggestion-row"><span className="suggestion-label">试试这个：</span><button onClick={() => void send('给林晓转600元')} disabled={blocked}><ArrowLeftRight size={13} />给林晓转600元</button><button onClick={() => void send('查本月账单，给林晓转600元，不影响房租和生活费')} disabled={blocked}><FileText size={13} />账单联动与资金保护</button></div>}
         <ComposerPrimitive.Root className="composer-root"><ComposerPrimitive.Input className="composer-input" placeholder="例如：给林晓转600元" aria-label="描述转账需求" submitMode="ctrlEnter" /><div className="composer-bottom"><span><LockKeyhole size={13} />所有交易都需要本人授权</span><ComposerPrimitive.Send className="composer-send" aria-label="发送请求"><Send size={16} /><span>发送</span></ComposerPrimitive.Send></div></ComposerPrimitive.Root><div className="composer-caption">Enter 换行 · Ctrl / ⌘ + Enter 发送 · 仅处理合成数据</div></>}
       </ThreadPrimitive.ViewportFooter>
     </ThreadPrimitive.Viewport></ThreadPrimitive.Root>

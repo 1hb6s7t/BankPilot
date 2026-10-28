@@ -7,3 +7,9 @@ playwright-report/
 coverage/
 *.log
 .DS_Store
+artifacts/submission-history/
+artifacts/submission/final-build-*/
+artifacts/video/
+artifacts/submission/BankPilot-比赛提交包-*.zip
+artifacts/submission/BankPilot-比赛提交包-*.zip.sha256
+!docs/evidence/2026-10-28-submission-source-tests.log

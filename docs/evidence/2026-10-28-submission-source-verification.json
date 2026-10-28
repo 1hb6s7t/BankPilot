@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-28",
+  "profile": "submission-current-ui-independent-copy",
+  "baselineCommit": "1ca9bad6ee581cd68b5bf3123a970747a99b2c9f",
+  "scope": "Current working tree with seven graphite/apricot UI and test changes, before documentation-only release packaging",
+  "sourceFilesChecked": 588,
+  "sourceHashesUnchangedDuringChecks": true,
+  "installation": {
+    "freshDirectory": true,
+    "freshPnpmStore": true,
+    "lockfileFrozen": true,
+    "seconds": 34.7,
+    "exitCode": 0
+  },
+  "environment": {
+    "os": "Darwin",
+    "node": "24.19.0",
+    "pnpm": "11.25.0",
+    "sameDevelopmentMachine": true
+  },
+  "command": "pnpm test:isolated",
+  "typecheck": true,
+  "vitest": {
+    "files": 135,
+    "passed": 3426,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 178.56
+  },
+  "build": true,
+  "exitCode": 0,
+  "ownedDatabaseCleanupVerified": true,
+  "cloudCalls": 0,
+  "browserSuiteRunThisCheck": false,
+  "finalZipReinstalledAndRetested": false,
+  "limits": [
+    "Local synthetic bank and controlled tests; not production or real bank acceptance",
+    "New cloud-model-to-payment end-to-end validation not run",
+    "New docs and release manifest may be added after this code verification",
+    "Final ZIP integrity is checked separately"
+  ],
+  "testedSourceManifestSha256": "c46272cf947aaa88370d8f1dcf906f04814803b11b1b06ee0d501959f948529f",
+  "testedSourceManifest": "docs/evidence/2026-10-28-tested-source-manifest.json"
+}

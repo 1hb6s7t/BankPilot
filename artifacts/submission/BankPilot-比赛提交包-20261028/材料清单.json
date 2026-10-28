@@ -1,0 +1,98 @@
+{
+  "title": "安心办 BankPilot——带资金约束的银行事务智能体",
+  "date": "2026-10-28",
+  "repository": "https://github.com/1hb6s7t/BankPilot",
+  "scope": "Competition deliverables; GitHub publication does not imply submission through the contest portal",
+  "introBodyCharacters": 156,
+  "technicalPdfPages": 8,
+  "securityPdfPages": 5,
+  "pptSlides": 10,
+  "plannedTalkSeconds": 530,
+  "talkTimedLive": false,
+  "videoDurationSeconds": 167.7667,
+  "videoWidth": 1920,
+  "videoHeight": 1080,
+  "videoFramesPerSecond": 30,
+  "verification": {
+    "sourceTestFiles": 135,
+    "sourceTestsPassed": 3426,
+    "typecheck": true,
+    "build": true,
+    "sourceZipIntegrityVerified": true,
+    "realBankAcceptance": false,
+    "newCloudToPaymentAcceptance": false
+  },
+  "files": [
+    {
+      "file": "00-提交清单.md",
+      "bytes": 2611,
+      "sha256": "4f36c10e86062eb3c08a129ef43825f1efdf4cac119f9f63b4c357951c784490"
+    },
+    {
+      "file": "01-作品简介.txt",
+      "bytes": 489,
+      "sha256": "adeb39f670fa978fe82259bc4f05d723a7fbc1d2e4300e77bf00887573bc2ad8"
+    },
+    {
+      "file": "02-技术文档.pdf",
+      "bytes": 294653,
+      "sha256": "ac8f3ecaad997aca95bb58267639334cf7c26d089adf2cb2bede1cb6b95bf0b8"
+    },
+    {
+      "file": "03-答辩PPT.pptx",
+      "bytes": 533370,
+      "sha256": "f203d3a532dc50b1f4a88aaf7ae0daf2ec63e0d6afcda9a7bf18b1ce38148250"
+    },
+    {
+      "file": "04-演示视频.mp4",
+      "bytes": 16639834,
+      "sha256": "6373ff824779df19396844b9cb83e657ce547c4841cc3ff847c242f59f817e16"
+    },
+    {
+      "file": "05-源代码.zip",
+      "bytes": 2642485,
+      "sha256": "b31535ae66af234d38c2acd72b4c90f364bbdd55d0522b243c773ebfb02e1e0f"
+    },
+    {
+      "file": "05-源代码.zip.sha256",
+      "bytes": 83,
+      "sha256": "22b4d6cdd6a91c074dd05b48afd70ff53f98e5062ab15ed56cf64831b303c4de"
+    },
+    {
+      "file": "06-安全自评报告.pdf",
+      "bytes": 266672,
+      "sha256": "e8b0c80d61c38774606b8bd2757281196f9cbe6f86ec4f219ab54b1988217812"
+    },
+    {
+      "file": "补充材料/GitHub仓库地址.txt",
+      "bytes": 37,
+      "sha256": "e5be20d344f77b5263e8e30159696921a2210a3f47ea1b2e308b7988ce83f8c7"
+    },
+    {
+      "file": "补充材料/测试说明.md",
+      "bytes": 2840,
+      "sha256": "78cf75bd995be104afda19b77c6a53ed446054f9b75ba6dde31cfd11595f972b"
+    },
+    {
+      "file": "补充材料/答辩PPT预览.pdf",
+      "bytes": 1735570,
+      "sha256": "f34bf7bd76a84b0df4862d56b13c18155ace2347b55578c80095cae936612855"
+    },
+    {
+      "file": "补充材料/视频字幕.srt",
+      "bytes": 3602,
+      "sha256": "a54057106bf50e96f87bbf3296fd09c2151cf9d9c3375e7a97f8856c96b6bee8"
+    },
+    {
+      "file": "补充材料/逐页讲稿.md",
+      "bytes": 6699,
+      "sha256": "e17c45e4798e65b4fb6716fedda8375e44d903152f8cc801038ae162a38c67d2"
+    },
+    {
+      "file": "补充材料/部署说明.md",
+      "bytes": 3152,
+      "sha256": "906668de7aa67a7b22ceb58b0fd2450780a8366759bcf54882f6f5ca38e6479c"
+    }
+  ],
+  "checksumScope": "文件校验.sha256 covers every file except itself; this manifest covers deliverables except itself and 文件校验.sha256"
+}

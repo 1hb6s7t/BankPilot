@@ -1,0 +1,69 @@
+.wb-overview, .wb-recent, .wb-contacts { background: #fff; border: 1px solid #e5e8e4; border-radius: 8px; color: #202824; min-width: 0; }
+.wb-overview { margin-bottom: 20px; padding: 0 22px 16px; }
+.wb-section-heading { min-height: 49px; display: flex; align-items: center; justify-content: space-between; gap: 14px; border-bottom: 1px solid #edf0ec; }
+.wb-section-heading h2 { margin: 0; font-size: 16px; font-weight: 650; line-height: 1.4; color: #202824; }
+.wb-text-button { border: 0; background: transparent; color: #636d66; padding: 5px 0 5px 6px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-size: 12px; white-space: nowrap; }
+.wb-text-button:hover { color: #a6600c; }
+.wb-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 19px 0 18px; }
+.wb-metric { min-width: 0; padding: 0 25px; border-left: 1px solid #e9ece8; }
+.wb-metric:first-child { padding-left: 0; border-left: 0; }
+.wb-metric-label { display: block; font-size: 14px; line-height: 1.4; }
+.wb-metric strong { display: block; margin: 6px 0; font-size: clamp(23px, 2.25vw, 32px); letter-spacing: -.7px; line-height: 1.18; font-variant-numeric: tabular-nums; font-weight: 650; overflow-wrap: anywhere; }
+.wb-metric-caption { display: block; font-size: 12px; line-height: 1.5; color: #7c847e; }
+.wb-allocation { display: flex; align-items: flex-start; gap: 22px; border-top: 1px solid #f0f2ef; padding-top: 13px; }
+.wb-allocation-title { font-size: 13px; color: #303a32; font-weight: 600; white-space: nowrap; line-height: 18px; }
+.wb-allocation-content { flex: 1; min-width: 0; }
+.wb-allocation-bar { height: 14px; width: 100%; display: flex; background: #e0e3e6; border-radius: 4px; overflow: hidden; }
+.wb-allocation-bar > span { min-width: 0; }
+.wb-bar-protected { background: #719889; }
+.wb-bar-payment { background: #efa33a; border-inline: 2px solid #fff; }
+.wb-bar-payment[style*="width: 0%"] { border: 0; }
+.wb-bar-remaining { background: #d7dcdf; }
+.wb-allocation-legend { display: flex; justify-content: space-between; gap: 8px 20px; padding-top: 10px; flex-wrap: wrap; }
+.wb-allocation-legend > span { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 7px; color: #737d76; font-size: 12px; line-height: 1.4; }
+.wb-allocation-legend i, .wb-status i { display: inline-block; flex: 0 0 7px; width: 7px; height: 7px; border-radius: 50%; }
+.wb-key-protected { background: #719889; }.wb-key-payment { background: #efa33a; }.wb-key-remaining { background: #cbd2d6; }
+.wb-allocation-legend b { font-size: 12px; font-variant-numeric: tabular-nums; color: #202824; font-weight: 600; }
+.wb-allocation-note { display: block; color: #8b938c; margin-top: 7px; font-size: 11px; }
+.wb-overview-state { border-top: 1px solid #edf0ec; min-height: 49px; padding-top: 13px; display: flex; align-items: flex-start; gap: 9px; color: #7c847e; font-size: 13px; line-height: 1.5; }
+.wb-overview-state > svg { flex-shrink: 0; margin-top: 1px; }.wb-overview-state > span { flex: 1; min-width: 0; }
+.wb-overview-warning { color: #9b6618; }
+.wb-supplement { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(320px, 1fr); gap: 18px; margin-top: 18px; align-items: stretch; }
+.wb-recent, .wb-contacts { padding: 0 20px 14px; }
+.wb-table-wrap { overflow-x: auto; }
+.wb-recent-table { width: 100%; border-collapse: collapse; table-layout: auto; margin-top: 7px; }
+.wb-recent-table th { padding: 7px 7px; text-align: left; font-size: 12px; font-weight: 400; background: #f7f8f6; color: #7c847e; white-space: nowrap; }
+.wb-recent-table td { border-bottom: 1px solid #edf0ec; padding: 6px 7px; font-size: 12px; line-height: 1.45; }
+.wb-recent-table tr:last-child td { border: 0; }.wb-recent-table td:nth-child(2) { color: #7c847e; white-space: nowrap; }
+.wb-recent-link { border: 0; background: transparent; padding: 3px 0; display: flex; gap: 10px; align-items: center; color: #344139; text-align: left; font-size: 13px; line-height: 1.5; }
+.wb-recent-link:hover { color: #a6600c; }.wb-recent-link svg { flex: 0 0 auto; }.wb-recent-link small { margin-left: 9px; font-size: 12px; font-variant-numeric: tabular-nums; color: #7c847e; }
+.wb-status { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; font-size: 12px; color: #a66c18; }.wb-status i { background: currentColor; }
+.wb-status-success { color: #5a8b76; }.wb-status-danger { color: #b45449; }.wb-status-muted { color: #939a94; }
+.wb-empty-history { min-height: 119px; display: flex; align-items: center; flex-wrap: wrap; gap: 13px; color: #879188; }
+.wb-empty-history > div { flex: 1; min-width: 200px; }.wb-empty-history strong { font-size: 14px; font-weight: 500; color: #657069; }.wb-empty-history p { font-size: 12px; line-height: 1.5; margin: 5px 0 0; }
+.wb-contact-list { display: flex; justify-content: space-between; gap: 7px; padding: 15px 0; min-height: 67px; }
+.wb-contact { background: transparent; border: 0; display: flex; gap: 8px; align-items: center; color: #344139; padding: 0; font-size: 13px; min-width: 0; }
+.wb-contact:hover { color: #a6600c; }.wb-contact > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wb-contact-avatar { display: inline-grid; place-items: center; flex: 0 0 34px; height: 34px; border-radius: 50%; font-size: 15px; font-weight: 600; }
+.wb-contact-avatar-0 { background: #fff0dd; color: #b57128; }.wb-contact-avatar-1 { background: #ece8fa; color: #6b5aab; }.wb-contact-avatar-2 { background: #e5f0e9; color: #507661; }
+.wb-contact-empty { font-size: 13px; color: #8b938c; margin: 6px 0; }
+.wb-shortcuts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.wb-shortcuts > button { display: flex; align-items: center; gap: 9px; border: 1px solid #e6eae5; background: #fff; border-radius: 5px; text-align: left; min-height: 53px; padding: 8px 9px; color: #303a32; min-width: 0; }
+.wb-shortcuts > button:hover { border-color: #e7c184; background: #fffaf3; }.wb-shortcuts > button > svg { flex: 0 0 auto; }.wb-shortcuts > button > svg:last-child { margin-left: auto; width: 10px; color: #8b938c; }
+.wb-shortcuts span { min-width: 0; }.wb-shortcuts strong { display: block; font-weight: 600; font-size: 13px; white-space: nowrap; }.wb-shortcuts small { display: block; margin-top: 4px; color: #8b938c; font-size: 10px; line-height: 1.3; }
+@media (max-width: 1180px) {
+  .wb-overview { padding-inline: 18px; }.wb-metric { padding-inline: 18px; }.wb-supplement { grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr); }
+  .wb-recent, .wb-contacts { padding-inline: 15px; }.wb-recent-link small { display: block; margin-left: 0; }.wb-contact { flex-direction: column; gap: 5px; }.wb-shortcuts > button { gap: 7px; }.wb-shortcuts > button > svg:first-child { width: 19px; }
+}
+@media (max-width: 940px) { .wb-supplement { grid-template-columns: 1fr; }.wb-contact { flex-direction: row; }.wb-contact-list { justify-content: flex-start; gap: 28px; }.wb-allocation { flex-direction: column; gap: 10px; }.wb-allocation-content { width: 100%; }.wb-shortcuts strong { font-size: 14px; }.wb-shortcuts small { font-size: 12px; } }
+@media (max-width: 600px) {
+  .wb-overview { padding-inline: 14px; }.wb-metrics { grid-template-columns: 1fr 1fr; padding-bottom: 14px; gap: 15px 0; }.wb-metric:first-child { grid-column: 1 / -1; padding: 0 0 13px; border-bottom: 1px solid #edf0ec; }.wb-metric:nth-child(2) { padding-left: 0; border-left: 0; }.wb-metric strong { font-size: 23px; }.wb-metric:first-child strong { font-size: 30px; }.wb-metric-label { font-size: 13px; }.wb-metric-caption { font-size: 11px; }
+  .wb-allocation-legend { display: grid; grid-template-columns: 1fr; gap: 8px; }.wb-allocation-legend > span { display: flex; }.wb-allocation-legend b { margin-left: auto; }.wb-overview-state { flex-wrap: wrap; }.wb-overview-state > span { flex-basis: 80%; }
+  .wb-contact-list { gap: 15px; justify-content: space-between; }.wb-contact { flex-direction: column; }.wb-recent-table th, .wb-recent-table td { padding-inline: 4px; }.wb-recent-table td:nth-child(2) { font-size: 11px; }.wb-status { font-size: 11px; gap: 4px; }.wb-recent-link { gap: 6px; }.wb-shortcuts strong { font-size: 12px; }.wb-shortcuts small { font-size: 10px; }
+}
+
+/* Keep the account summary aligned to the selected desktop composition. */
+.wb-metrics { padding-block: 14px; }
+.wb-overview { padding-bottom: 14px; }
+.wb-allocation-note { display: none; }
+.wb-allocation-title small { display: block; margin-top: 5px; color: #7c847e; font-size: 11px; font-weight: 400; }

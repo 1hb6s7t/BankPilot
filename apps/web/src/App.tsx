@@ -28,6 +28,8 @@ import {
   Send,
   ShieldAlert,
   ShieldCheck,
+  Search,
+  House,
   Sparkles,
   Wallet,
   X,
@@ -52,6 +54,7 @@ import { PreparationRequestsPage } from './PreparationRequestsPage';
 import { setCommandRecoveryOwner } from './commandRecovery';
 import type { GoalView, InvestmentAction } from '../../../packages/contracts/src';
 import type { PreparationResult } from '../../../packages/contracts/src/preparations';
+import { AccountOverview, WorkbenchSupplement } from './WorkbenchWidgets';
 
 const ConversationsPanel = lazy(() => import('./ConversationsPanel').then(module => ({ default: module.ConversationsPanel })));
 
@@ -62,7 +65,7 @@ const DEMO_EMAIL = 'bankpilot@example.test';
 const DEMO_PASSWORD = 'BankPilot-demo-2026!';
 
 const navigation: { name: Section; icon: typeof ArrowLeftRight; available: boolean }[] = [
-  { name: '转账工作台', icon: ArrowLeftRight, available: true },
+  { name: '转账工作台', icon: House, available: true },
   { name: '联系人', icon: CircleUserRound, available: true },
   { name: '账单', icon: FileText, available: true },
   { name: '理财', icon: Banknote, available: true },
@@ -161,6 +164,11 @@ export default function App() {
   const [password, setPassword] = useState(DEMO_PASSWORD);
   const [notice, setNotice] = useState<{ kind: 'error' | 'success' | 'info'; text: string }>();
   const [refreshing, setRefreshing] = useState(false);
+  const [featureSearch, setFeatureSearch] = useState('');
+  const [overviewFunds, setOverviewFunds] = useState<FundsOverview>();
+  const [overviewLoading, setOverviewLoading] = useState(false);
+  const [overviewError, setOverviewError] = useState<string>();
+  const [fundsRefreshEpoch, setFundsRefreshEpoch] = useState(0);
 
   const clearIdentity = useCallback(() => {
     setCommandRecoveryOwner(undefined); managementReads.current.invalidate();
@@ -172,6 +180,8 @@ export default function App() {
     setActionFundsLoading(false); setBusyActionId(undefined); setPlanning(false); setRefreshing(false);
     setFaultMode('NORMAL'); setFaultApplied(false); setDrawerOpen(false); setMobileNavOpen(false);
     setActiveSection('转账工作台'); setOwnerId(undefined); setNotice(undefined);
+    setOverviewFunds(undefined); setOverviewError(undefined); setOverviewLoading(false); setFeatureSearch('');
+    setFundsRefreshEpoch(0);
   }, []);
   const renewSession = useCallback(() => {
     setCommandRecoveryOwner(undefined); managementReads.current.invalidate();
@@ -210,6 +220,7 @@ export default function App() {
     try {
       await loadDashboard(ticket, requireFresh);
       if (!sessionGate.current.isCurrent(ticket)) return;
+      if (!quiet || requireFresh) setFundsRefreshEpoch(value => value + 1);
       // The selected conversation command owns the plan pane; a user's global latestPlan does not.
     } catch (error) {
       if (!sessionGate.current.isCurrent(ticket)) return;
@@ -300,9 +311,30 @@ export default function App() {
     ? latestPlan.fundsPreview
     : undefined;
   const needsPolling = dashboardRequiresPolling(dashboard, dashboardStale);
+  const overviewAccount = dashboard?.accounts[0];
+  const selectedFundsAccount = dashboard?.accounts.find(account => account.id === selectedAction?.accountId);
 
   useEffect(() => {
-    if (!selectedAction || authState !== 'signed-in' || !['AWAITING_CONFIRMATION', 'AWAITING_VERIFICATION'].includes(selectedAction.status)) {
+    const accountId = overviewAccount?.id;
+    if (authState !== 'signed-in' || !accountId || activeSection !== '转账工作台') return;
+    let active = true;
+    const ticket = sessionTicket;
+    setOverviewFunds(undefined); setOverviewError(undefined); setOverviewLoading(true);
+    void api.funds(accountId).then(value => {
+      if (!active || !sessionGate.current.isCurrent(ticket)) return;
+      if (value.preview.accountId !== accountId || value.preview.amountMinor !== '0') {
+        setOverviewError('账户资金概览与当前账户不一致，请刷新重试。');
+        return;
+      }
+      setOverviewFunds(value);
+    }).catch((error: unknown) => {
+      if (active && sessionGate.current.isCurrent(ticket)) setOverviewError(error instanceof Error ? error.message : '资金概览暂不可用。');
+    }).finally(() => { if (active && sessionGate.current.isCurrent(ticket)) setOverviewLoading(false); });
+    return () => { active = false; };
+  }, [overviewAccount?.id, overviewAccount?.balanceMinor, overviewAccount?.reservedMinor, fundsRefreshEpoch, authState, activeSection, sessionTicket]);
+
+  useEffect(() => {
+    if (!selectedAction || authState !== 'signed-in' || activeSection !== '转账工作台' || !['AWAITING_CONFIRMATION', 'AWAITING_VERIFICATION'].includes(selectedAction.status)) {
       setActionFunds(undefined);
       setActionFundsError(undefined);
       setActionFundsLoading(false);
@@ -325,7 +357,7 @@ export default function App() {
       .catch((error: unknown) => { if (active && sessionGate.current.isCurrent(ticket)) setActionFundsError({ actionId: selectedAction.id, message: error instanceof Error ? error.message : '资金预演暂不可用。' }); })
       .finally(() => { if (active && sessionGate.current.isCurrent(ticket)) setActionFundsLoading(false); });
     return () => { active = false; };
-  }, [authState, sessionTicket, selectedAction?.id, selectedAction?.accountId, selectedAction?.amountMinor, selectedAction?.status]);
+  }, [authState, activeSection, sessionTicket, selectedAction?.id, selectedAction?.accountId, selectedAction?.amountMinor, selectedAction?.status, selectedFundsAccount?.balanceMinor, selectedFundsAccount?.reservedMinor, fundsRefreshEpoch]);
 
   useEffect(() => {
     if (!needsPolling || authState !== 'signed-in') return;
@@ -522,7 +554,10 @@ export default function App() {
   }
 
   const account = dashboard?.accounts[0];
-  const availableMinor = account ? BigInt(account.balanceMinor) - BigInt(account.reservedMinor) : 0n;
+  const previewingPrimaryAccount = selectedActionNeedsPreview && selectedAction?.accountId === account?.id;
+  const overviewPreview = previewingPrimaryAccount ? currentActionFunds?.preview : overviewFunds?.preview;
+  const searchMatches = featureSearch.trim() ? navigation.filter(item => `${item.name} ${item.name === '转账工作台' ? '总览 办理 转账' : ''}`.includes(featureSearch.trim())) : [];
+  const hasDomainActions = managementPlanActions.length > 0 || latestInvestmentActions.length > 0 || Boolean(latestGoal);
   const activeActions = actions.filter((action) => !['SUCCEEDED', 'FAILED', 'CANCELLED', 'EXPIRED'].includes(action.status));
 
   return (
@@ -531,7 +566,7 @@ export default function App() {
       <aside className={`sidebar ${mobileNavOpen ? 'sidebar-open' : ''}`}>
         <div className="brand-lockup">
           <div className="brand-mark"><Landmark size={20} strokeWidth={2.3} /></div>
-          <div><span className="brand-name">BankPilot</span><span className="brand-caption">银行智能工作台</span></div>
+          <div><span className="brand-name">BankPilot</span><span className="brand-caption">安心办 · 银行事务助手</span></div>
           <button className="icon-button sidebar-close" onClick={() => setMobileNavOpen(false)} aria-label="关闭菜单"><X size={17} /></button>
         </div>
         <div className="environment-chip"><span className="env-dot" />本地合成沙箱</div>
@@ -568,11 +603,17 @@ export default function App() {
         <header className="topbar">
           <div className="topbar-left">
             <button className="icon-button mobile-menu" onClick={() => setMobileNavOpen(true)} aria-label="打开导航菜单"><Menu size={20} /></button>
-            <div className="breadcrumbs"><span>个人金融</span><span className="breadcrumb-sep">/</span><strong>{activeSection}</strong></div>
+            <div className="topbar-heading"><h1>{activeSection === '转账工作台' ? '我的工作台' : activeSection}</h1><time>{new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long', timeZone: 'Asia/Shanghai' }).format(new Date())}</time></div>
           </div>
           <div className="topbar-actions">
-            <span className="mode-chip"><span className="mode-icon"><Sparkles size={13} /></span>{modeLabel(serverMode)}</span>
-            <button className="icon-button top-icon" aria-label="通知" title="通知"><Bell size={18} /><i /></button>
+            <div className="workspace-search-wrap">
+              <form className="workspace-search" role="search" onSubmit={event => { event.preventDefault(); if (searchMatches[0]) { setActiveSection(searchMatches[0].name); setFeatureSearch(''); } }}>
+                <Search size={16} /><input aria-label="搜索功能" placeholder="搜索账单、联系人或功能…" value={featureSearch} onChange={event => setFeatureSearch(event.target.value)} onKeyDown={event => { if (event.key === 'Escape') setFeatureSearch(''); }} />
+              </form>
+              {featureSearch && <div className="workspace-search-results" aria-label="功能搜索结果">{searchMatches.map(item => <button key={item.name} onClick={() => { setActiveSection(item.name); setFeatureSearch(''); }}><item.icon size={16} />{item.name}<ArrowRight size={14} /></button>)}{!searchMatches.length && <p>没有找到该功能，试试“账单”或“联系人”。</p>}</div>}
+            </div>
+            <span className="mode-chip"><span className="mode-icon"><Landmark size={14} /></span>{modeLabel(serverMode)}</span>
+            <button className="icon-button top-icon" aria-label="查看办理记录" title="查看办理记录" onClick={() => setDrawerOpen(true)}><Bell size={18} /><i /></button>
             <div className="top-user"><div className="avatar avatar-small">林</div><ChevronDown size={14} /></div>
           </div>
         </header>
@@ -582,69 +623,30 @@ export default function App() {
 
           {activeSection === '转账工作台' ? (
             <>
-              <section className="page-heading">
-                <div>
-                  <div className="eyebrow"><span className="eyebrow-line" />今日工作台 <span className="heading-date">{new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' }).format(new Date())}</span></div>
-                  <h1>把每笔转账，确认清楚。</h1>
-                  <p>用自然语言提出需求，检查计划与风险，再由你本人授权执行。</p>
-                </div>
-                <button className="button button-outline refresh-button" onClick={() => void refreshAll()} disabled={refreshing}>
-                  <RefreshCw size={15} className={refreshing ? 'spin' : ''} />刷新状态
-                </button>
-              </section>
-
-              <section className="overview-grid" aria-label="账户概览">
-                <article className="balance-card">
-                  <div className="balance-card-top"><div><span className="card-overline">账户总余额</span><span className="account-name">{account?.name ?? '演示账户'}</span></div><div className="balance-icon"><Wallet size={20} /></div></div>
-                  <div className="balance-number">{account ? formatMoney(account.balanceMinor) : '—'}</div>
-                  <div className="balance-card-foot"><span><i className="balance-status-dot" />{dashboardStale ? '正在刷新完整账户状态' : '账户状态正常'}</span><span>{account?.maskedNumber ?? '•••• 0000'}</span></div>
-                </article>
-                <article className="metric-card available-card">
-                  <div className="metric-top"><span>可用余额</span><div className="metric-icon mint"><ArrowDownLeft size={18} /></div></div>
-                  <strong>{account ? formatMoney(availableMinor) : '—'}</strong>
-                  <span className="metric-caption">已扣除待处理交易占额</span>
-                  <div className="metric-foot"><span>待处理占额</span><b>{account ? formatMoney(account.reservedMinor) : '—'}</b></div>
-                </article>
-                <article className="metric-card daily-card">
-                  <div className="metric-top"><span>今日已转出</span><div className="metric-icon blue"><ArrowRight size={18} /></div></div>
-                  <strong>{formatMoney(dashboard?.dailyUsedMinor ?? '0')}</strong>
-                  <span className="metric-caption">按服务端记账与状态汇总</span>
-                  <div className="metric-foot"><span>风险校验</span><b className="positive-caption"><ShieldCheck size={14} />已启用</b></div>
-                </article>
-              </section>
+              <AccountOverview account={account} preview={overviewPreview} loading={previewingPrimaryAccount ? actionFundsLoading : overviewLoading} error={previewingPrimaryAccount ? currentActionFundsError : overviewError} stale={dashboardStale} onOpenFunds={() => setActiveSection('资金计划')} />
 
               <div className="workbench-grid">
                 <section className="chat-card panel">
                   <div className="panel-header chat-header">
-                    <div className="panel-title-group"><div className="assistant-avatar"><Sparkles size={17} /></div><div><h2>BankPilot 助手</h2><span>描述你要办理的事情</span></div></div>
+                    <div className="panel-title-group"><div><h2>继续办理</h2></div></div>
                     <div className="mode-explainer"><span className={`mode-led ${serverMode === 'model' ? 'mode-led-model' : ''}`} />{modeLabel(serverMode)}<button className="help-icon" title="本模式由服务端 PlanResult.mode 决定，不把脚本化规划标记为真实模型。" aria-label="了解规划模式"><CircleHelp size={15} /></button></div>
                   </div>
+                  <PlanningMilestones events={latestPlan?.events ?? []} planning={planning} failure={planningFailure} />
                   <Suspense fallback={<div className="business-loading" role="status"><span className="loader loader-small" />正在加载聊天工作台…</div>}>
                     <ConversationsPanel key={`${ownerId}:${sessionEpoch}`} ownerId={ownerId!} onViewPlan={viewConversationPlan} onError={(text) => { if (sessionGate.current.isCurrent(sessionTicket)) setNotice({ kind: 'error', text }); }} onPlanning={(value) => { if (sessionGate.current.isCurrent(sessionTicket)) setPlanning(value); }} />
                   </Suspense>
                 </section>
 
                 <aside className="right-column">
-                  <section className="panel plan-panel">
+                  {(selectedAction || !hasDomainActions) && <section className="panel actions-panel">
                     <div className="panel-header compact-header">
-                      <div><span className="section-kicker">服务端流程</span><h2>计划与执行进度</h2></div>
-                      <span className="live-indicator"><i />服务端事件</span>
-                    </div>
-                    <AgentProgress events={latestPlan?.events ?? []} planning={planning} failure={planningFailure} plan={latestPlan} goal={latestGoal} planActions={latestPlan ? [...actions.filter((action) => action.taskId === latestPlan.taskId), ...managementPlanActions, ...latestInvestmentActions, ...(latestGoal?.nodes.flatMap(node => node.investmentAction ? [node.investmentAction] : []) ?? []), ...(latestGoal?.nodes.flatMap(node => node.transferAction ? [node.transferAction] : []) ?? [])] : []} />
-                    {latestPlan && <PlanEvidenceCard plan={latestPlan} />}
-                    {managementPlanActions.length > 0 && <ManagementActionsPanel actions={managementPlanActions} onRefresh={refreshAll} />}
-                    {latestInvestmentActions.length > 0 && <div className="phase4-plan-link"><strong>赎回建议已准备 · 每笔需 Passkey</strong><p>请查看产品、金额和预计到账时间，再完成独立授权。</p><button className="button button-outline" onClick={() => setActiveSection('理财')}>查看赎回确认卡 <ArrowRight size={14} /></button></div>}
-                    {latestGoal && <div className="phase4-plan-link"><strong>{latestGoal.title} · {formatMoney(latestGoal.amountMinor)}</strong><p>截止 {latestGoal.targetDate}。{latestGoal.status === 'NEEDS_REPLAN' ? latestGoal.reasons.join('；') : '请按资金准备步骤分别核对、授权；目标本身不授权付款。'}</p><button className="button button-outline" onClick={() => setActiveSection('生活目标')}>查看生活目标计划 <ArrowRight size={14} /></button></div>}
-                  </section>
-
-                  <section className="panel actions-panel">
-                    <div className="panel-header compact-header">
-                      <div><span className="section-kicker">待你处理</span><h2>交易授权</h2></div>
-                      <span className="count-badge">{activeActions.length}</span>
+                      <div><h2>{selectedAction && !selectedActionNeedsPreview ? '交易状态' : '待你确认'}</h2></div>
+                      <span className={`action-heading-state ${selectedAction ? `heading-${statusTone(selectedAction.status)}` : ''}`}>{selectedAction ? statusLabel(selectedAction.status) : `${activeActions.length} 项`}</span>
                     </div>
                     {selectedAction ? (
                       <ActionReview
                         action={selectedAction}
+                        sourceAccount={dashboard?.accounts.find(item => item.id === selectedAction.accountId)}
                         payee={dashboard?.payees.find((item) => item.id === selectedAction.payeeId)}
                         fundsPreview={currentActionFunds?.preview}
                         snapshotFundsPreview={selectedPlanFundsSnapshot}
@@ -661,9 +663,27 @@ export default function App() {
                       <div className="empty-action"><div className="empty-action-icon"><LockKeyhole size={19} /></div><strong>暂无待授权交易</strong><span>提出转账需求后，服务端会返回可审阅动作。</span></div>
                     )}
                     {actions.length > 1 && <button className="text-action see-all-actions" onClick={() => setDrawerOpen(true)}>查看全部 {actions.length} 笔动作 <ArrowRight size={14} /></button>}
-                  </section>
+                  </section>}
 
-                  <section className="sandbox-panel">
+                  {hasDomainActions && <section className="panel domain-actions-panel"><div className="panel-header"><h2>其他待办与计划</h2></div>
+                    {managementPlanActions.length > 0 && <ManagementActionsPanel actions={managementPlanActions} onRefresh={refreshAll} />}
+                    {latestInvestmentActions.length > 0 && <div className="phase4-plan-link"><strong>赎回建议已准备 · 每笔需 Passkey</strong><p>请查看产品、金额和预计到账时间，再完成独立授权。</p><button className="button button-outline" onClick={() => setActiveSection('理财')}>查看赎回确认卡 <ArrowRight size={14} /></button></div>}
+                    {latestGoal && <div className="phase4-plan-link"><strong>{latestGoal.title} · {formatMoney(latestGoal.amountMinor)}</strong><p>截止 {latestGoal.targetDate}。{latestGoal.status === 'NEEDS_REPLAN' ? latestGoal.reasons.join('；') : '请按资金准备步骤分别核对、授权；目标本身不授权付款。'}</p><button className="button button-outline" onClick={() => setActiveSection('生活目标')}>查看生活目标计划 <ArrowRight size={14} /></button></div>}
+                  </section>}
+                </aside>
+              </div>
+
+              <WorkbenchSupplement actions={actions} payees={dashboard?.payees ?? []} onOpenAction={id => { setSelectedActionId(id); setDrawerOpen(true); }} onOpenHistory={() => setDrawerOpen(true)} onNavigate={setActiveSection} />
+              <div className="workbench-details">
+                <details className="panel plan-panel workbench-disclosure"><summary><ShieldCheck size={16} /><span>规划与复核详情</span><ChevronDown size={16} /></summary>
+                    <div className="panel-header compact-header">
+                      <div><span className="section-kicker">服务端流程</span><h2>计划与执行进度</h2></div>
+                      <span className="live-indicator"><i />服务端事件</span>
+                    </div>
+                    <AgentProgress events={latestPlan?.events ?? []} planning={planning} failure={planningFailure} plan={latestPlan} goal={latestGoal} planActions={latestPlan ? [...actions.filter((action) => action.taskId === latestPlan.taskId), ...managementPlanActions, ...latestInvestmentActions, ...(latestGoal?.nodes.flatMap(node => node.investmentAction ? [node.investmentAction] : []) ?? []), ...(latestGoal?.nodes.flatMap(node => node.transferAction ? [node.transferAction] : []) ?? [])] : []} />
+                    {latestPlan && <PlanEvidenceCard plan={latestPlan} />}
+                  </details>
+                <details className="sandbox-panel workbench-disclosure"><summary><CircleHelp size={16} /><span>演示与故障恢复</span><ChevronDown size={16} /></summary>
                     <div className="sandbox-title"><div><span className="sandbox-label">本地演示控制</span><strong>下一笔执行故障</strong></div><div className="sandbox-icon"><CircleHelp size={15} /></div></div>
                     <p>仅影响合成银行下一笔转账，可验证超时后的查单恢复。</p>
                     <div className="fault-row">
@@ -675,20 +695,8 @@ export default function App() {
                       </select>
                       <button className="button button-quiet" onClick={() => void applyFault()}>{faultApplied ? <Check size={14} /> : <Plus size={14} />}{faultApplied ? '已设置' : '应用'}</button>
                     </div>
-                  </section>
-                </aside>
+                  </details>
               </div>
-
-              <section className="bottom-strip">
-                <div className="bottom-strip-label"><FileClock size={15} /><span>最近动作</span></div>
-                <div className="recent-actions">
-                  {actions.slice(0, 3).map((action) => <button key={action.id} className="recent-action" onClick={() => { setSelectedActionId(action.id); setDrawerOpen(true); }}>
-                    <span className={`tiny-status tiny-${statusTone(action.status)}`} /><span className="recent-name">给 {action.payeeName}</span><b>{formatMoney(action.amountMinor)}</b><span className="recent-status">{statusLabel(action.status)}</span><ArrowRight size={13} />
-                  </button>)}
-                  {actions.length === 0 && <span className="no-recent">完成规划后，最近的交易动作会显示在这里。</span>}
-                </div>
-                <button className="text-action audit-open" onClick={() => setDrawerOpen(true)}>回执与审计 <ArrowRight size={14} /></button>
-              </section>
             </>
           ) : activeSection === '账单' ? (
             <BillsPage onBack={() => setActiveSection('转账工作台')} />
@@ -706,7 +714,7 @@ export default function App() {
             <ScopeNotice section={activeSection} onBack={() => setActiveSection('转账工作台')} />
           )}
 
-          <footer className="page-footer"><span><i className="footer-dot" />所有账户与收款人均为合成数据</span><span>BankPilot Sandbox · 本地演示环境</span></footer>
+          <footer className="page-footer"><button className="text-action" onClick={() => void refreshAll()} disabled={refreshing}><RefreshCw size={13} className={refreshing ? 'spin' : ''} />刷新账户状态</button><span><i className="footer-dot" />所有账户与收款人均为合成数据</span><span>BankPilot Sandbox · 本地演示环境</span></footer>
         </div>
       </main>
 
@@ -732,6 +740,19 @@ export default function App() {
       </>}
     </div>
   );
+}
+
+function PlanningMilestones({ events, planning, failure }: { events: AgentEvent[]; planning: boolean; failure?: PlanningFailure }) {
+  const latest = new Map<string, AgentEvent>();
+  for (const event of events) latest.set(event.role, event);
+  const steps = [...latest.values()].slice(-3);
+  if (failure) return <div className="milestones-message" role="status"><ShieldAlert size={17} />{planningFailureView(failure).title} · 请查看请求详情</div>;
+  if (!steps.length) return <div className="workbench-milestones" aria-label="办理流程">
+    <div><CircleUserRound size={19} /><span><strong>说出需求</strong><small>{planning ? '正在理解请求' : '转账、账单或生活目标'}</small></span></div>
+    <div><Wallet size={19} /><span><strong>核对安排</strong><small>先检查资金与影响</small></span></div>
+    <div><ShieldCheck size={19} /><span><strong>本人确认</strong><small>确认具体动作后执行</small></span></div>
+  </div>;
+  return <div className="workbench-milestones" aria-label="当前规划进度">{steps.map(event => <div key={event.role} title={event.summary} className={event.status === 'completed' ? 'milestone-complete' : 'milestone-active'}>{event.status === 'completed' ? <CheckCircle2 size={19} /> : <Clock3 size={19} />}<span><strong>{({ semantic_intent: '理解需求', 'semantic-intent': '理解需求', transfer: '规划转账', reviewer: '独立复核', supervisor: '协调任务' } as Record<string,string>)[event.role] ?? roleLabel(event.role)}</strong><small>{eventState(event)}</small></span></div>)}</div>;
 }
 
 function modeLabel(mode?: PlanResult['mode']): string {
@@ -1063,8 +1084,9 @@ function FundsPlanPage({ accountId, onBack }: { accountId?: string; onBack: () =
   </section>;
 }
 
-function ActionReview({ action, payee, fundsPreview, snapshotFundsPreview, fundsLoading, fundsError, busy, registerBusy, onConfirm, onCancel, onReconcile, onRegisterPasskey }: {
+function ActionReview({ action, sourceAccount, payee, fundsPreview, snapshotFundsPreview, fundsLoading, fundsError, busy, registerBusy, onConfirm, onCancel, onReconcile, onRegisterPasskey }: {
   action: ActionView;
+  sourceAccount?: DashboardData['accounts'][number];
   payee?: PayeeView;
   fundsPreview?: FundsPreview;
   snapshotFundsPreview?: FundsPreview;
@@ -1095,11 +1117,9 @@ function ActionReview({ action, payee, fundsPreview, snapshotFundsPreview, funds
     <div className="transfer-summary">
       <div className="transfer-payee"><div className="payee-avatar">{(payee?.name ?? action.payeeName).slice(0, 1)}</div><div><span>收款人</span><strong>{payee?.name ?? action.payeeName}</strong><small>{payee ? `${payee.bank} · ${payee.maskedNumber}` : action.payeeId}</small></div><div className="transfer-arrow"><ArrowRight size={16} /></div></div>
       <div className="transfer-amount"><span>转账金额</span><strong>{formatMoney(action.amountMinor)}</strong><small>人民币 · 合成转账</small></div>
-      <div className="transfer-details"><span>备注</span><b>{action.memo || '无'}</b></div>
-      <div className="transfer-details"><span>有效期</span><b>{formatTime(action.expiresAt)}</b></div>
-      <div className="transfer-details action-status-row"><span>当前状态</span><b className={`status-pill status-${statusTone(action.status)}`}><i />{statusLabel(action.status)}</b></div>
+      <div className="transfer-details"><span>付款账户</span><b>{sourceAccount ? `${sourceAccount.name} · ${sourceAccount.maskedNumber}` : action.accountId}</b></div>
     </div>
-    {fundsPreview ? <FundsPreviewCard preview={fundsPreview} title="当前资金预演" /> : fundsLoading ? <div className="funds-inline-state"><span className="loader loader-small" />正在读取当前资金预演…</div> : fundsError ? <div className="funds-inline-error">当前资金预演读取失败：{fundsError}</div> : snapshotFundsPreview ? <FundsPreviewCard preview={snapshotFundsPreview} title="计划生成时资金快照" stale /> : <div className="funds-inline-error">当前资金预演不可用，授权前需重新读取。</div>}
+    {fundsPreview ? <><div className="authorization-funds-summary"><span>预计转账后可用</span><strong>{formatMoney(fundsPreview.availableAfterMinor)}</strong></div><details className="authorization-funds-details" open={!fundsPreview.allowed}><summary><ShieldCheck size={14} /><span>{fundsPreview.allowed ? `已纳入资金保护 ${formatMoney(fundsPreview.protectedMinor)}` : '资金保护规则拦截'}</span><ChevronDown size={14} /></summary><FundsPreviewCard preview={fundsPreview} title="当前资金预演" /></details></> : fundsLoading ? <div className="funds-inline-state"><span className="loader loader-small" />正在读取当前资金预演…</div> : fundsError ? <div className="funds-inline-error">当前资金预演读取失败：{fundsError}</div> : snapshotFundsPreview ? <FundsPreviewCard preview={snapshotFundsPreview} title="计划生成时资金快照" stale /> : <div className="funds-inline-error">当前资金预演不可用，授权前需重新读取。</div>}
     {action.failureReason && <div className={`action-message ${action.status === 'FAILED' ? 'action-message-error' : ''}`}>{action.failureReason}</div>}
     {action.status === 'UNKNOWN' && <div className="unknown-callout"><Clock3 size={16} /><span>银行可能已记账，但客户端没有收到响应。请先查单，避免重复提交。</span></div>}
     {action.receipt && <div className="receipt-card action-receipt"><div className="receipt-success"><CheckCircle2 size={16} /><strong>服务端回执</strong></div><ReceiptRows action={action} /></div>}
@@ -1115,7 +1135,7 @@ function ActionReview({ action, payee, fundsPreview, snapshotFundsPreview, funds
     {action.status === 'AUTHORIZED' && <div className="status-explainer"><span className="loader loader-small" />已授权，等待服务端执行 Worker 处理。</div>}
     {action.status === 'SUBMITTING' && <div className="status-explainer"><span className="loader loader-small" />提交处理中。系统会每 1.5 秒刷新状态。</div>}
     {isFinal && <div className={`final-state final-${statusTone(action.status)}`}>{action.status === 'SUCCEEDED' ? <CheckCircle2 size={16} /> : <Clock3 size={16} />}{statusLabel(action.status)} · {formatTime(action.updatedAt)}</div>}
-    <div className="action-hash"><span>动作校验摘要</span><code>{action.actionHash.slice(0, 17)}…</code></div>
+    <details className="transaction-metadata"><summary>交易详情与有效期 <ChevronDown size={14} /></summary><div className="transfer-details"><span>备注</span><b>{action.memo || '无'}</b></div><div className="transfer-details"><span>有效期</span><b>{formatTime(action.expiresAt)}</b></div><div className="action-hash"><span>动作校验摘要</span><code>{action.actionHash.slice(0, 17)}…</code></div></details>
   </div>;
 }
 
